@@ -69,10 +69,9 @@
         .social-float { position: fixed; left: 20px; bottom: 100px; z-index: 9998; display: flex; flex-direction: column; gap: 10px; }
         .social-float a { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transition: all 0.3s; }
         .social-float a:hover { transform: scale(1.15); }
+        /* محدد الفيديو النشط */
         .teacher-btn { transition: all 0.3s; }
         .teacher-btn.active { background: #2563eb; color: white; box-shadow: 0 5px 15px rgba(37,99,235,0.3); }
-        .content-tab { cursor: pointer; padding: 0.75rem 1.5rem; border-radius: 1rem; font-weight: 700; background: #f1f5f9; border: 2px solid transparent; transition: all 0.2s; }
-        .content-tab.active { background: white; border-color: #2563eb; color: #2563eb; box-shadow: 0 2px 10px rgba(37,99,235,0.1); }
     </style> 
 </head> 
 <body class="text-slate-800"> 
@@ -257,9 +256,7 @@ const portal = {
     communityTab: 'forums',
     currentView: 'type',
     currentFileFilter: { type: null, stage: null, grade: null },
-    activeVideoIndex: 0,
-    _currentContents: null,
-    _currentActiveContentIndex: 0,
+    activeVideoIndex: 0, // للتحكم في الفيديو النشط في الدرس
 
     init() {
         const s = localStorage.getItem('studentSession');
@@ -289,6 +286,7 @@ const portal = {
         setTimeout(() => this.openSharedContent(), 600);
         setInterval(() => { if(this.session) { const e = Math.floor((Date.now()-this._studyStart)/60000); if(e>=1){ this.updateStudyTime(e); this._studyStart=Date.now(); } } }, 60000);
         this._studyStart = Date.now();
+        // إعداد زر الاشتراك
         document.getElementById('subscribe-btn')?.addEventListener('click', () => {
             const wa = (this.dbData.settings?.socialLinks?.whatsapp || '201234567890').replace(/[^0-9]/g,'');
             window.open(`https://wa.me/${wa}`, '_blank');
@@ -649,6 +647,7 @@ const portal = {
                     <h5 class="font-black text-sm">${b.name}</h5>
                     ${badges.includes(b.id)?`<span class="inline-block mt-2 bg-gradient-to-r ${b.color} text-white text-[10px] px-2 py-0.5 rounded-full font-black">مكتسبة ✓</span>`:'<span class="inline-block mt-2 bg-slate-100 text-slate-400 text-[10px] px-2 py-0.5 rounded-full">🔒</span>'}
                 </div>`).join('');
+            // إحصائيات المواد
             const subjects = d.subjects || {};
             const subjectNames = getSubjectsForStage(this.path.stage || 'primary').reduce((acc, s) => { acc[s.id] = s.name; return acc; }, {});
             const container = document.getElementById('stats-subjects');
@@ -658,6 +657,7 @@ const portal = {
                     const name = subjectNames[sub] || sub;
                     return `<div class="bg-white p-4 rounded-2xl border shadow-sm flex justify-between items-center"><span class="font-black">${name}</span><span class="text-sm">${data.quizzes} اختبار | متوسط ${avg}%</span></div>`;
                 }).join('');
+                // إحصائية كلية
                 const totalQuizzes = Object.values(subjects).reduce((sum, s) => sum + s.quizzes, 0);
                 const totalScores = Object.values(subjects).reduce((sum, s) => sum + s.totalScore, 0);
                 const overallAvg = totalQuizzes > 0 ? Math.round(totalScores / totalQuizzes) : 0;
@@ -701,24 +701,15 @@ const portal = {
             const l=this.dbData.lessons[id]; if(!l) return notify('الدرس غير موجود','error');
             document.getElementById('viewer-modal').classList.remove('hidden');
             document.getElementById('viewer-title').innerHTML=`📖 ${l.title}`;
-            
-            // تجهيز الشروحات النصية
-            let contents = [];
-            if (l.contents && Array.isArray(l.contents)) {
-                contents = l.contents;
-            } else if (l.content) {
-                contents = [{ title: 'الشرح', content: l.content }];
-            }
-            
             const videos = l.videos || [];
-            this.activeVideoIndex = 0;
+            this.activeVideoIndex = 0; // بداية بأول فيديو
             let body = '<div class="max-w-4xl mx-auto space-y-6">';
-            
             // عرض الفيديو النشط
             if(videos.length > 0) {
                 body += `<div id="active-video-container" class="video-container rounded-2xl shadow-xl mb-4">
                     <iframe src="${getYouTubeEmbedUrl(videos[0].url)}" frameborder="0" allowfullscreen></iframe>
                 </div>`;
+                // أزرار المدرسين
                 if(videos.length > 1) {
                     body += '<div class="flex flex-wrap gap-3 justify-center mb-4"><span class="text-sm font-bold text-slate-500 self-center">اختر شرح المدرس:</span>';
                     videos.forEach((v, idx) => {
@@ -727,29 +718,14 @@ const portal = {
                         </button>`;
                     });
                     body += '</div>';
-                }
-            }
-            
-            // عرض الشروحات النصية مع تبويبات
-            if (contents.length > 0) {
-                if (contents.length === 1) {
-                    body += `<div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg"><h4 class="font-black text-lg mb-4">📝 ${contents[0].title}</h4><div class="prose">${this.formatContent(contents[0].content)}</div></div>`;
                 } else {
-                    body += '<div class="bg-white rounded-2xl shadow-lg overflow-hidden">';
-                    body += '<div class="flex gap-2 p-4 bg-slate-50 border-b overflow-x-auto">';
-                    contents.forEach((c, idx) => {
-                        body += `<button onclick="portal.switchContent(${idx})" id="content-tab-${idx}" class="content-tab ${idx===0?'active':''}">${c.title}</button>`;
-                    });
-                    body += '</div>';
-                    body += '<div id="active-content-container" class="p-6 md:p-8 prose">';
-                    body += this.formatContent(contents[0].content);
-                    body += '</div></div>';
-                    this._currentContents = contents;
-                    this._currentActiveContentIndex = 0;
+                    body += `<div class="text-center text-sm font-bold text-slate-500 mb-2"><i class="fas fa-chalkboard-teacher ml-1"></i> شرح: ${videos[0].name || 'المعلم'}</div>`;
                 }
             }
-            
-            if(l.questions?.length) body+=`<div class="bg-emerald-50 p-8 rounded-2xl text-center mt-6"><h4 class="font-black text-2xl text-emerald-900 mb-4">🎯 تدريبات (${l.questions.length} سؤال)</h4><button onclick="portal.startQuizEngine('lesson','${id}')" class="bg-emerald-500 text-white px-10 py-4 rounded-2xl font-black">ابدأ التدريب</button></div>`;
+            // محتوى الشرح
+            if(l.content) body+=`<div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg"><h4 class="font-black text-lg mb-4">📝 الشرح</h4><div class="prose">${this.formatContent(l.content)}</div></div>`;
+            // أسئلة التدريب
+            if(l.questions?.length) body+=`<div class="bg-emerald-50 p-8 rounded-2xl text-center"><h4 class="font-black text-2xl text-emerald-900 mb-4">🎯 تدريبات (${l.questions.length} سؤال)</h4><button onclick="portal.startQuizEngine('lesson','${id}')" class="bg-emerald-500 text-white px-10 py-4 rounded-2xl font-black">ابدأ التدريب</button></div>`;
             body+='</div>';
             document.getElementById('viewer-body').innerHTML = body;
         } else if(type==='quiz') this.startQuizEngine('quiz',id);
@@ -758,18 +734,10 @@ const portal = {
     switchVideo(index, url) {
         this.activeVideoIndex = index;
         document.getElementById('active-video-container').innerHTML = `<iframe src="${url}" frameborder="0" allowfullscreen></iframe>`;
+        // تحديث الأزرار
         document.querySelectorAll('.teacher-btn').forEach((btn, i) => {
             btn.classList.toggle('active', i === index);
         });
-    },
-    switchContent(index) {
-        if (!this._currentContents) return;
-        const content = this._currentContents[index];
-        document.getElementById('active-content-container').innerHTML = this.formatContent(content.content);
-        document.querySelectorAll('.content-tab').forEach((btn, i) => {
-            btn.classList.toggle('active', i === index);
-        });
-        this._currentActiveContentIndex = index;
     },
     closeViewer() { document.getElementById('viewer-modal').classList.add('hidden'); clearInterval(this.quizTimer); this.quizTimer=null; this.currentQuizData=null; },
 
@@ -886,6 +854,7 @@ const portal = {
             const xpEarned = Math.round(perc * 0.5);
             this.updateStudentProfile(xpEarned, perc, qd.subject);
             this.updateLeaderboard(xpEarned, 1, perc);
+            // حفظ نتيجة الاختبار
             database.ref(`studentAnswers/${this.session.username}`).push({
                 subject: qd.subject,
                 score: perc,
