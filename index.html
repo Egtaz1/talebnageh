@@ -12,12 +12,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script> 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Cairo', sans-serif; 
-            background: linear-gradient(135deg, #f0f4ff 0%, #e8eeff 30%, #f8fafc 60%, #f0f4ff 100%);
-            background-attachment: fixed;
-            display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden;
-        }
+        body { font-family: 'Cairo', sans-serif; background: linear-gradient(135deg, #f0f4ff 0%, #e8eeff 30%, #f8fafc 60%, #f0f4ff 100%); background-attachment: fixed; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
         main { flex: 1; position: relative; z-index: 1; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -30,7 +25,6 @@
         @keyframes gradient-shift { 0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%} }
         .floating { animation: float 4s ease-in-out infinite; }
         .floating-slow { animation: float-slow 5s ease-in-out infinite; }
-        .pulse-glow { animation: pulse-glow 2.5s ease-in-out infinite; }
         .card-hover { transition: all 0.4s cubic-bezier(0.4,0,0.2,1); cursor: pointer; }
         .card-hover:hover { transform: translateY(-10px); box-shadow: 0 25px 40px -15px rgba(0,0,0,0.2); }
         .quiz-option { transition: all 0.25s; cursor: pointer; position: relative; }
@@ -69,7 +63,6 @@
         .social-float { position: fixed; left: 20px; bottom: 100px; z-index: 9998; display: flex; flex-direction: column; gap: 10px; }
         .social-float a { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transition: all 0.3s; }
         .social-float a:hover { transform: scale(1.15); }
-        /* محدد الفيديو النشط */
         .teacher-btn { transition: all 0.3s; }
         .teacher-btn.active { background: #2563eb; color: white; box-shadow: 0 5px 15px rgba(37,99,235,0.3); }
     </style> 
@@ -96,16 +89,14 @@
                     <i class="fas fa-graduation-cap text-white text-xl md:text-2xl"></i>
                 </div>
             </div>
-            <div>
-                <h1 class="text-xl md:text-2xl font-black tracking-tight bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent" id="site-name-display">منصتي</h1>
-            </div>
+            <div><h1 class="text-xl md:text-2xl font-black tracking-tight bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent" id="site-name-display">منصتي</h1></div>
         </div>
         <div class="hidden lg:flex items-center gap-2">
-            <button onclick="portal.goHome()" class="px-4 py-2 rounded-xl font-bold text-sm hover:bg-white/10"><i class="fas fa-home"></i> الرئيسية</button>
-            <button onclick="portal.openLeaderboard()" class="px-4 py-2 rounded-xl font-bold text-sm hover:bg-white/10"><i class="fas fa-trophy"></i> المتصدرين</button>
-            <button onclick="portal.openLiveSessions()" class="px-4 py-2 rounded-xl font-bold text-sm hover:bg-white/10"><i class="fas fa-broadcast-tower"></i> البث</button>
-            <button onclick="portal.openCommunity()" class="px-4 py-2 rounded-xl font-bold text-sm hover:bg-white/10"><i class="fas fa-users"></i> المجتمع</button>
-            <button onclick="portal.openMyStats()" class="px-4 py-2 rounded-xl font-bold text-sm hover:bg-white/10"><i class="fas fa-chart-bar"></i> إحصائياتي</button>
+            <button onclick="portal.goHome()" class="px-4 py-2 rounded-xl font-bold text-sm hover:bg-white/10"><i class="fas fa-home ml-1"></i> الرئيسية</button>
+            <button onclick="portal.openLeaderboard()" class="px-4 py-2 rounded-xl font-bold text-sm hover:bg-white/10"><i class="fas fa-trophy ml-1"></i> المتصدرين</button>
+            <button onclick="portal.openLiveSessions()" class="px-4 py-2 rounded-xl font-bold text-sm hover:bg-white/10"><i class="fas fa-broadcast-tower ml-1"></i> البث</button>
+            <button onclick="portal.openCommunity()" class="px-4 py-2 rounded-xl font-bold text-sm hover:bg-white/10"><i class="fas fa-users ml-1"></i> المجتمع</button>
+            <button onclick="portal.openMyStats()" class="px-4 py-2 rounded-xl font-bold text-sm hover:bg-white/10"><i class="fas fa-chart-bar ml-1"></i> إحصائياتي</button>
         </div>
         <div id="user-info" class="hidden glass-dark px-5 py-2.5 rounded-full flex items-center gap-3">
             <div class="w-9 h-9 bg-gradient-to-br from-emerald-400 to-cyan-500 rounded-full flex items-center justify-center"><i class="fas fa-user text-white"></i></div>
@@ -113,16 +104,16 @@
             <button onclick="portal.logout()" class="bg-red-500/20 text-red-300 hover:bg-red-500 hover:text-white px-3 py-1.5 rounded-full font-bold text-xs"><i class="fas fa-sign-out-alt ml-1"></i> خروج</button> 
         </div>
         <div id="guest-info">
-            <button onclick="portal.openLoginModal()" class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-2.5 rounded-full font-bold text-sm"><i class="fas fa-sign-in-alt"></i> دخول</button>
+            <button onclick="portal.openLoginModal()" class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-2.5 rounded-full font-bold text-sm"><i class="fas fa-sign-in-alt ml-1"></i> دخول</button>
         </div>
         <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="lg:hidden w-10 h-10 bg-white/10 rounded-xl"><i class="fas fa-bars text-white"></i></button>
     </div>
     <div id="mobile-menu" class="hidden lg:hidden absolute top-full left-0 right-0 bg-slate-900/95 p-4 space-y-2">
-        <button onclick="portal.goHome()" class="w-full text-right px-4 py-3 rounded-xl font-bold text-white"><i class="fas fa-home"></i> الرئيسية</button>
-        <button onclick="portal.openLeaderboard()" class="w-full text-right px-4 py-3 rounded-xl font-bold text-white"><i class="fas fa-trophy"></i> المتصدرين</button>
-        <button onclick="portal.openLiveSessions()" class="w-full text-right px-4 py-3 rounded-xl font-bold text-white"><i class="fas fa-broadcast-tower"></i> البث</button>
-        <button onclick="portal.openCommunity()" class="w-full text-right px-4 py-3 rounded-xl font-bold text-white"><i class="fas fa-users"></i> المجتمع</button>
-        <button onclick="portal.openMyStats()" class="w-full text-right px-4 py-3 rounded-xl font-bold text-white"><i class="fas fa-chart-bar"></i> إحصائياتي</button>
+        <button onclick="portal.goHome();document.getElementById('mobile-menu').classList.add('hidden')" class="w-full text-right px-4 py-3 rounded-xl font-bold text-white"><i class="fas fa-home ml-1"></i> الرئيسية</button>
+        <button onclick="portal.openLeaderboard();document.getElementById('mobile-menu').classList.add('hidden')" class="w-full text-right px-4 py-3 rounded-xl font-bold text-white"><i class="fas fa-trophy ml-1"></i> المتصدرين</button>
+        <button onclick="portal.openLiveSessions();document.getElementById('mobile-menu').classList.add('hidden')" class="w-full text-right px-4 py-3 rounded-xl font-bold text-white"><i class="fas fa-broadcast-tower ml-1"></i> البث</button>
+        <button onclick="portal.openCommunity();document.getElementById('mobile-menu').classList.add('hidden')" class="w-full text-right px-4 py-3 rounded-xl font-bold text-white"><i class="fas fa-users ml-1"></i> المجتمع</button>
+        <button onclick="portal.openMyStats();document.getElementById('mobile-menu').classList.add('hidden')" class="w-full text-right px-4 py-3 rounded-xl font-bold text-white"><i class="fas fa-chart-bar ml-1"></i> إحصائياتي</button>
     </div>
 </nav> 
 
@@ -133,79 +124,191 @@
 <div id="announcement-box" class="hidden container mx-auto px-4 mt-6 relative z-10">
     <div class="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-700 text-white p-5 rounded-3xl shadow-2xl flex items-center gap-4">
         <i class="fas fa-bell text-2xl"></i>
-        <p id="announcement-text" class="font-bold"></p>
-        <button onclick="this.parentElement.parentElement.classList.add('hidden')" class="text-white/60 hover:text-white"><i class="fas fa-times"></i></button>
+        <p id="announcement-text" class="font-bold flex-1"></p>
+        <button onclick="this.parentElement.parentElement.classList.add('hidden')" class="text-white/60 hover:text-white w-8 h-8 flex items-center justify-center"><i class="fas fa-times"></i></button>
     </div>
 </div>
 
 <main class="container mx-auto px-4 py-8 relative z-10"> 
     
-    <!-- Home -->
+    <!-- ==================== VIEW: TYPE (HOME) ==================== -->
     <div id="view-type" class="max-w-6xl mx-auto mt-4" style="animation: fadeInUp 0.6s ease-out;">
-        <div class="text-center mb-12"><h2 class="text-4xl md:text-6xl font-black text-slate-900 mb-4">رحلتك نحو <span class="gradient-text">التفوق</span> تبدأ هنا</h2></div>
+        <div class="text-center mb-12"><h2 class="text-4xl md:text-6xl font-black text-slate-900 mb-4">رحلتك نحو <span class="gradient-text">التفوق</span> تبدأ هنا</h2><p class="text-slate-500 font-bold text-lg">اختر مسارك التعليمي</p></div>
         <div id="news-ticker" class="hidden glass-card p-6 rounded-[2.5rem] shadow-xl mb-12"></div>
         <div id="types-container" class="grid grid-cols-1 md:grid-cols-3 gap-8 px-2 md:px-10"></div>
     </div>
 
-    <!-- Stage -->
-    <div id="view-stage" class="hidden max-w-4xl mx-auto mt-8"><h2 class="text-3xl font-black text-center mb-10">اختر المرحلة الدراسية</h2><div id="stages-container" class="grid grid-cols-1 md:grid-cols-3 gap-6 stagger-animation"></div></div>
+    <!-- ==================== VIEW: STAGE ==================== -->
+    <div id="view-stage" class="hidden max-w-4xl mx-auto mt-8">
+        <h2 class="text-3xl font-black text-center mb-4">اختر المرحلة الدراسية</h2>
+        <p class="text-center text-slate-500 mb-10 font-bold">حدد المرحلة التي تريد تصفحها</p>
+        <div id="stages-container" class="grid grid-cols-1 md:grid-cols-3 gap-6 stagger-animation"></div>
+    </div>
     
-    <!-- Grade & Subject -->
-    <div id="view-grade-subject" class="hidden max-w-5xl mx-auto mt-6"><div class="text-center mb-8"><h3 class="text-xl font-black">🎯 اختر الصف</h3></div><div class="grid grid-cols-3 gap-4 mb-12" id="grade-buttons"></div><div id="subjects-container" class="hidden"><div class="text-center mb-8"><h3 class="text-2xl font-black">📚 المواد الدراسية</h3></div><div id="subjects-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 stagger-animation"></div></div></div>
+    <!-- ==================== VIEW: GRADE & SUBJECT ==================== -->
+    <div id="view-grade-subject" class="hidden max-w-5xl mx-auto mt-6">
+        <div class="text-center mb-8"><h3 class="text-xl font-black">🎯 اختر الصف الدراسي</h3></div>
+        <div class="grid grid-cols-3 gap-4 mb-12" id="grade-buttons"></div>
+        <div id="subjects-container" class="hidden">
+            <div class="text-center mb-8"><h3 class="text-2xl font-black">📚 المواد الدراسية</h3></div>
+            <div id="subjects-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 stagger-animation"></div>
+        </div>
+    </div>
     
-    <!-- Content -->
-    <div id="view-content" class="hidden max-w-5xl mx-auto mt-6"><div id="units-list" class="space-y-12 mb-16"></div><div id="quizzes-section" class="hidden mt-16"><h3 class="text-2xl font-black text-blue-900 mb-8">الاختبارات</h3><div id="quizzes-list" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div></div><div id="simulations-section" class="hidden mt-16"><h3 class="text-2xl font-black text-yellow-800 mb-8">المحاكيات</h3><div id="simulations-list" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div></div></div>
+    <!-- ==================== VIEW: CONTENT (LESSONS, QUIZZES, SIMULATIONS) ==================== -->
+    <div id="view-content" class="hidden max-w-5xl mx-auto mt-6">
+        <div id="units-list" class="space-y-12 mb-16"></div>
+        <div id="quizzes-section" class="hidden mt-16"><h3 class="text-2xl font-black text-blue-900 mb-8"><i class="fas fa-file-signature ml-2"></i>الاختبارات</h3><div id="quizzes-list" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div></div>
+        <div id="simulations-section" class="hidden mt-16"><h3 class="text-2xl font-black text-yellow-800 mb-8"><i class="fas fa-stopwatch ml-2"></i>المحاكيات</h3><div id="simulations-list" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div></div>
+    </div>
     
-    <!-- Files -->
-    <div id="view-files" class="hidden max-w-6xl mx-auto mt-6"><div class="text-center mb-10"><div class="w-20 h-20 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-4 shadow-2xl floating">📚</div><h2 class="text-3xl font-black text-slate-800 mb-2">الكتب والمذكرات</h2></div><div id="files-filtered-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 stagger-animation"></div></div>
+    <!-- ==================== VIEW: FILES ==================== -->
+    <div id="view-files" class="hidden max-w-6xl mx-auto mt-6">
+        <div class="text-center mb-10">
+            <div class="w-20 h-20 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-4 shadow-2xl floating">📚</div>
+            <h2 class="text-3xl font-black text-slate-800 mb-2">الكتب والمذكرات</h2>
+            <p class="text-slate-500 font-bold">جميع الملفات والمراجع مرتبة حسب المرحلة</p>
+        </div>
+        <!-- فلاتر الملفات -->
+        <div class="flex flex-wrap gap-3 justify-center mb-8">
+            <button onclick="portal.setFileFilter('all')" id="file-filter-all" class="px-5 py-2.5 rounded-xl font-bold bg-slate-800 text-white">الكل</button>
+            <button onclick="portal.setFileFilter('public')" id="file-filter-public" class="px-5 py-2.5 rounded-xl font-bold bg-slate-100 text-slate-600">تربية وتعليم</button>
+            <button onclick="portal.setFileFilter('azhar')" id="file-filter-azhar" class="px-5 py-2.5 rounded-xl font-bold bg-slate-100 text-slate-600">أزهر</button>
+        </div>
+        <div id="files-filtered-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 stagger-animation"></div>
+    </div>
     
-    <!-- Leaderboard -->
-    <div id="view-leaderboard" class="hidden max-w-4xl mx-auto mt-6"><div class="text-center mb-10">🏆<h2 class="text-3xl font-black">لوحة المتصدرين</h2></div><div class="tabs-container mb-8 justify-center"><button class="tab-btn active" onclick="portal.switchLeaderboardTab('daily',this)">📅 اليوم</button><button class="tab-btn" onclick="portal.switchLeaderboardTab('weekly',this)">📆 الأسبوع</button><button class="tab-btn" onclick="portal.switchLeaderboardTab('monthly',this)">🗓️ الشهر</button><button class="tab-btn" onclick="portal.switchLeaderboardTab('allTime',this)">👑 الكل</button></div><div id="leaderboard-list" class="space-y-3"></div></div>
+    <!-- ==================== VIEW: LEADERBOARD ==================== -->
+    <div id="view-leaderboard" class="hidden max-w-4xl mx-auto mt-6">
+        <div class="text-center mb-10"><span class="text-6xl block mb-4">🏆</span><h2 class="text-3xl font-black">لوحة المتصدرين</h2></div>
+        <div class="tabs-container mb-8 justify-center">
+            <button class="tab-btn active" onclick="portal.switchLeaderboardTab('daily',this)">📅 اليوم</button>
+            <button class="tab-btn" onclick="portal.switchLeaderboardTab('weekly',this)">📆 الأسبوع</button>
+            <button class="tab-btn" onclick="portal.switchLeaderboardTab('monthly',this)">🗓️ الشهر</button>
+            <button class="tab-btn" onclick="portal.switchLeaderboardTab('allTime',this)">👑 الكل</button>
+        </div>
+        <div id="leaderboard-list" class="space-y-3"></div>
+    </div>
     
-    <!-- Live Sessions -->
-    <div id="view-live-sessions" class="hidden max-w-5xl mx-auto mt-6"><div class="text-center mb-10">🔴<h2 class="text-3xl font-black">البث المباشر</h2></div><div class="tabs-container mb-8 justify-center"><button class="tab-btn active" onclick="portal.switchSessionsTab('live',this)">🔴 مباشر</button><button class="tab-btn" onclick="portal.switchSessionsTab('upcoming',this)">📅 قادم</button><button class="tab-btn" onclick="portal.switchSessionsTab('ended',this)">✅ منتهي</button></div><div id="sessions-list" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div></div>
+    <!-- ==================== VIEW: LIVE SESSIONS ==================== -->
+    <div id="view-live-sessions" class="hidden max-w-5xl mx-auto mt-6">
+        <div class="text-center mb-10"><span class="text-6xl block mb-4">🔴</span><h2 class="text-3xl font-black">البث المباشر</h2></div>
+        <div class="tabs-container mb-8 justify-center">
+            <button class="tab-btn active" onclick="portal.switchSessionsTab('live',this)">🔴 مباشر</button>
+            <button class="tab-btn" onclick="portal.switchSessionsTab('upcoming',this)">📅 قادم</button>
+            <button class="tab-btn" onclick="portal.switchSessionsTab('ended',this)">✅ منتهي</button>
+        </div>
+        <div id="sessions-list" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+    </div>
     
-    <!-- Community -->
-    <div id="view-community" class="hidden max-w-5xl mx-auto mt-6"><div class="flex justify-between items-center mb-10"><h2 class="text-3xl font-black">👥 المجتمع</h2><button onclick="portal.showNewForumPost()" class="bg-purple-500 text-white px-6 py-3 rounded-2xl font-black"><i class="fas fa-plus"></i> منشور</button></div><div class="tabs-container mb-8"><button class="tab-btn active" onclick="portal.switchCommunityTab('forums',this)">💬 المنتدى</button><button class="tab-btn" onclick="portal.switchCommunityTab('groups',this)">👥 المجموعات</button></div><div id="community-content"></div><div id="new-post-form" class="hidden glass-card p-6 rounded-3xl mb-8"><input id="forum-post-title" placeholder="العنوان" class="w-full border-2 p-4 rounded-2xl mb-3"><textarea id="forum-post-content" placeholder="المحتوى" class="w-full border-2 p-4 rounded-2xl h-32 mb-3"></textarea><button onclick="portal.submitForumPost()" class="bg-purple-500 text-white px-8 py-3 rounded-2xl font-black">نشر</button></div></div>
+    <!-- ==================== VIEW: COMMUNITY ==================== -->
+    <div id="view-community" class="hidden max-w-5xl mx-auto mt-6">
+        <div class="flex justify-between items-center mb-10">
+            <h2 class="text-3xl font-black">👥 المجتمع</h2>
+            <button onclick="portal.showNewForumPost()" class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-2xl font-black shadow-lg"><i class="fas fa-plus ml-1"></i> منشور جديد</button>
+        </div>
+        <div class="tabs-container mb-8">
+            <button class="tab-btn active" onclick="portal.switchCommunityTab('forums',this)">💬 المنتدى</button>
+            <button class="tab-btn" onclick="portal.switchCommunityTab('groups',this)">👥 المجموعات</button>
+        </div>
+        <div id="community-content"></div>
+        <div id="new-post-form" class="hidden glass-card p-6 rounded-3xl mb-8">
+            <input id="forum-post-title" placeholder="عنوان المنشور" class="w-full border-2 p-4 rounded-2xl mb-3 font-bold">
+            <textarea id="forum-post-content" placeholder="محتوى المنشور..." class="w-full border-2 p-4 rounded-2xl h-32 mb-3 font-bold"></textarea>
+            <div class="flex gap-3">
+                <button onclick="portal.submitForumPost()" class="bg-purple-500 text-white px-8 py-3 rounded-2xl font-black">نشر</button>
+                <button onclick="document.getElementById('new-post-form').classList.add('hidden')" class="bg-slate-200 text-slate-600 px-8 py-3 rounded-2xl font-bold">إلغاء</button>
+            </div>
+        </div>
+    </div>
     
-    <!-- Stats -->
-    <div id="view-stats" class="hidden max-w-5xl mx-auto mt-6"><div id="stats-not-logged" class="text-center py-16"><h2 class="text-3xl font-black mb-4">📊 إحصائياتك</h2><button onclick="portal.openLoginModal()" class="bg-blue-600 text-white px-10 py-4 rounded-2xl font-black">تسجيل الدخول</button></div><div id="stats-content" class="hidden"><div class="glass-card p-8 rounded-3xl mb-8 text-center"><h3 id="stats-level">المستوى 1</h3><p id="stats-xp">0 XP</p><div class="bg-slate-200 rounded-full h-4"><div id="stats-xp-bar" class="bg-indigo-500 h-4 rounded-full" style="width:0%"></div></div></div><div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10"><div class="glass-card p-5 text-center"><p>📝 اختبارات</p><p id="stats-total-quizzes">0</p></div><div class="glass-card p-5 text-center"><p>🎯 متوسط</p><p id="stats-avg-score">0%</p></div><div class="glass-card p-5 text-center"><p>🔥 أيام</p><p id="stats-streak">0</p></div><div class="glass-card p-5 text-center"><p>⏱️ ساعات</p><p id="stats-hours">0</p></div></div><div id="stats-badges" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10"></div><h3 class="text-xl font-black mb-4">📈 إحصائيات المواد</h3><div id="stats-subjects" class="space-y-4 mb-8"></div></div></div>
+    <!-- ==================== VIEW: STATS ==================== -->
+    <div id="view-stats" class="hidden max-w-5xl mx-auto mt-6">
+        <div id="stats-not-logged" class="text-center py-16">
+            <span class="text-6xl block mb-4">📊</span>
+            <h2 class="text-3xl font-black mb-4">إحصائياتك الشخصية</h2>
+            <p class="text-slate-500 mb-6">سجل دخولك لتتمكن من متابعة تقدمك وإحصائياتك</p>
+            <button onclick="portal.openLoginModal()" class="bg-blue-600 text-white px-10 py-4 rounded-2xl font-black">تسجيل الدخول</button>
+        </div>
+        <div id="stats-content" class="hidden">
+            <div class="glass-card p-8 rounded-3xl mb-8 text-center">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-2xl font-black" id="stats-level">المستوى 1</h3>
+                    <span class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full font-black" id="stats-xp">0 XP</span>
+                </div>
+                <div class="bg-slate-200 rounded-full h-4 mb-2"><div id="stats-xp-bar" class="bg-gradient-to-r from-indigo-500 to-purple-500 h-4 rounded-full transition-all duration-500" style="width:0%"></div></div>
+                <p class="text-xs text-slate-400 font-bold" id="stats-xp-next">0 / 100 XP للمستوى التالي</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+                <div class="glass-card p-5 rounded-2xl text-center"><span class="text-3xl block mb-2">📝</span><p class="text-xs text-slate-500 font-bold">اختبارات محلولة</p><p class="text-2xl font-black text-indigo-700" id="stats-total-quizzes">0</p></div>
+                <div class="glass-card p-5 rounded-2xl text-center"><span class="text-3xl block mb-2">🎯</span><p class="text-xs text-slate-500 font-bold">متوسط الدرجات</p><p class="text-2xl font-black text-emerald-700" id="stats-avg-score">0%</p></div>
+                <div class="glass-card p-5 rounded-2xl text-center"><span class="text-3xl block mb-2">🔥</span><p class="text-xs text-slate-500 font-bold">أيام متتالية</p><p class="text-2xl font-black text-orange-700" id="stats-streak">0</p></div>
+                <div class="glass-card p-5 rounded-2xl text-center"><span class="text-3xl block mb-2">⏱️</span><p class="text-xs text-slate-500 font-bold">دقائق الدراسة</p><p class="text-2xl font-black text-cyan-700" id="stats-hours">0</p></div>
+            </div>
+            <h3 class="text-xl font-black mb-4">🏅 الشارات والإنجازات</h3>
+            <div id="stats-badges" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10"></div>
+            <h3 class="text-xl font-black mb-4">📈 إحصائيات المواد</h3>
+            <div id="stats-subjects" class="space-y-4 mb-8"></div>
+        </div>
+    </div>
     
-    <!-- Static Pages -->
-    <div id="view-page" class="hidden max-w-4xl mx-auto mt-10"><div class="glass-card p-8 rounded-[2.5rem]"><h2 id="static-page-title" class="text-3xl font-black mb-8"></h2><div id="static-page-content" class="prose"></div></div></div>
+    <!-- ==================== VIEW: STATIC PAGE ==================== -->
+    <div id="view-page" class="hidden max-w-4xl mx-auto mt-10">
+        <div class="glass-card p-8 rounded-[2.5rem]">
+            <h2 id="static-page-title" class="text-3xl font-black mb-8"></h2>
+            <div id="static-page-content" class="prose"></div>
+        </div>
+    </div>
 </main>
 
 <footer class="relative bg-slate-900 text-slate-400 pt-20 mt-auto">
-    <div class="container mx-auto px-4 pb-10 text-center"><h3 class="text-white font-black text-2xl mb-1" id="footer-site-name">منصتي</h3><div class="flex justify-center gap-6 text-sm font-bold mt-4"><a href="#" onclick="portal.openStaticPage('about')" class="hover:text-white">من نحن</a><a href="#" onclick="portal.openStaticPage('terms')" class="hover:text-white">الشروط</a><a href="#" onclick="portal.openStaticPage('privacy')" class="hover:text-white">الخصوصية</a></div><div id="footer-social" class="mt-4 flex justify-center gap-4"></div><p class="text-xs mt-4">© <span id="current-year"></span></p></div>
+    <div class="container mx-auto px-4 pb-10 text-center">
+        <h3 class="text-white font-black text-2xl mb-1" id="footer-site-name">منصتي</h3>
+        <p class="text-sm text-slate-500 mb-4">منصة تعليمية متكاملة</p>
+        <div class="flex justify-center gap-6 text-sm font-bold mt-4">
+            <a href="#" onclick="portal.openStaticPage('about')" class="hover:text-white transition-colors">من نحن</a>
+            <a href="#" onclick="portal.openStaticPage('terms')" class="hover:text-white transition-colors">الشروط</a>
+            <a href="#" onclick="portal.openStaticPage('privacy')" class="hover:text-white transition-colors">الخصوصية</a>
+        </div>
+        <div id="footer-social" class="mt-4 flex justify-center gap-4"></div>
+        <p class="text-xs mt-4">© <span id="current-year"></span> جميع الحقوق محفوظة</p>
+    </div>
 </footer>
 
 <!-- Login Modal -->
 <div id="login-modal" class="fixed inset-0 bg-slate-900/90 z-[9999] hidden flex items-center justify-center p-4">
-    <div class="glass p-8 rounded-[2.5rem] max-w-sm w-full text-center">
+    <div class="glass p-8 rounded-[2.5rem] max-w-sm w-full text-center shadow-2xl">
         <i class="fas fa-lock text-4xl text-blue-600 mb-4"></i>
         <h3 class="text-3xl font-black mb-8">تسجيل الدخول</h3>
-        <input type="text" id="std-user" placeholder="اسم المستخدم" class="w-full border-2 p-4 rounded-2xl mb-3 text-center">
-        <input type="password" id="std-pass" placeholder="الرقم السري" class="w-full border-2 p-4 rounded-2xl mb-3 text-center">
-        <button onclick="portal.processLogin()" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-black">دخول</button>
-        <button onclick="portal.closeLoginModal()" class="w-full text-slate-400 mt-2">إلغاء</button>
+        <input type="text" id="std-user" placeholder="اسم المستخدم" class="w-full border-2 p-4 rounded-2xl mb-3 text-center font-bold">
+        <input type="password" id="std-pass" placeholder="الرقم السري" class="w-full border-2 p-4 rounded-2xl mb-3 text-center font-bold">
+        <button onclick="portal.processLogin()" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-black hover:bg-black transition-all">دخول</button>
+        <button onclick="portal.closeLoginModal()" class="w-full text-slate-400 mt-2 font-bold">إلغاء</button>
         <div class="mt-4 text-sm">ليس لديك حساب؟ <button id="subscribe-btn" class="text-emerald-500 font-black hover:underline">اشترك الآن</button></div>
     </div>
 </div>
 
-<!-- Viewer Modal -->
+<!-- Viewer Modal (للدرس والمحتوى) -->
 <div id="viewer-modal" class="fixed inset-0 bg-slate-900/95 z-[9999] hidden overflow-y-auto">
-    <div class="glass-dark p-4 flex justify-between items-center sticky top-0"><h2 id="viewer-title" class="font-black text-white"></h2><button onclick="portal.closeViewer()" class="w-10 h-10 bg-white/10 rounded-full text-white"><i class="fas fa-times"></i></button></div>
-    <div id="viewer-body" class="p-4 md:p-8"></div>
+    <div class="glass-dark p-4 flex justify-between items-center sticky top-0 z-10">
+        <h2 id="viewer-title" class="font-black text-white text-lg"></h2>
+        <button onclick="portal.closeViewer()" class="w-10 h-10 bg-white/10 rounded-full text-white hover:bg-red-500/50 transition-all"><i class="fas fa-times"></i></button>
+    </div>
+    <div id="viewer-body" class="p-4 md:p-8 max-w-5xl mx-auto"></div>
 </div>
 
 <!-- Session Modal -->
 <div id="session-modal" class="fixed inset-0 bg-slate-900/95 z-[9999] hidden overflow-y-auto">
-    <div class="glass-dark p-4 flex justify-between items-center sticky top-0"><h2 id="session-title" class="font-black text-white"></h2><button onclick="this.parentElement.parentElement.classList.add('hidden')" class="w-10 h-10 bg-white/10 rounded-full text-white"><i class="fas fa-times"></i></button></div>
-    <div id="session-body" class="p-4 md:p-8"></div>
+    <div class="glass-dark p-4 flex justify-between items-center sticky top-0 z-10">
+        <h2 id="session-modal-title" class="font-black text-white"></h2>
+        <button onclick="document.getElementById('session-modal').classList.add('hidden')" class="w-10 h-10 bg-white/10 rounded-full text-white hover:bg-red-500/50 transition-all"><i class="fas fa-times"></i></button>
+    </div>
+    <div id="session-modal-body" class="p-4 md:p-8 max-w-4xl mx-auto"></div>
 </div>
 
 <script>
 document.getElementById('current-year').innerText = new Date().getFullYear();
+
 const firebaseConfig = {
     apiKey: "AIzaSyDyaSx72GXPLZqvfinZm6lpWvtLi3jvrR4",
     authDomain: "talebyg-a2609.firebaseapp.com",
@@ -220,13 +323,42 @@ const unitNames = ["", "الوحدة الأولى", "الوحدة الثانية
 
 function getSubjectsForStage(stage) {
     const defaults = {
-        primary: [ {id:'arabic',name:'لغة عربية',icon:'fa-book-open',emoji:'📖',gradient:'from-emerald-400 to-teal-500'},{id:'math',name:'رياضيات',icon:'fa-calculator',emoji:'🧮',gradient:'from-blue-400 to-cyan-500'},{id:'science',name:'علوم',icon:'fa-flask',emoji:'🔬',gradient:'from-purple-400 to-pink-500'},{id:'english',name:'إنجليزي',icon:'fa-language',emoji:'🇬🇧',gradient:'from-rose-400 to-red-500'},{id:'social',name:'دراسات',icon:'fa-globe-africa',emoji:'🌍',gradient:'from-amber-400 to-orange-500'},{id:'religion',name:'دين',icon:'fa-mosque',emoji:'🕌',gradient:'from-teal-400 to-emerald-500'} ],
-        prep: [ {id:'arabic',name:'لغة عربية',icon:'fa-book-open',emoji:'📖',gradient:'from-emerald-400 to-teal-500'},{id:'math',name:'رياضيات',icon:'fa-calculator',emoji:'🧮',gradient:'from-blue-400 to-cyan-500'},{id:'science',name:'علوم',icon:'fa-flask',emoji:'🔬',gradient:'from-purple-400 to-pink-500'},{id:'english',name:'إنجليزي',icon:'fa-language',emoji:'🇬🇧',gradient:'from-rose-400 to-red-500'},{id:'social',name:'دراسات',icon:'fa-globe-africa',emoji:'🌍',gradient:'from-amber-400 to-orange-500'},{id:'computer',name:'حاسب',icon:'fa-laptop-code',emoji:'💻',gradient:'from-slate-400 to-gray-500'} ],
-        sec: [ {id:'arabic',name:'عربي',icon:'fa-book-open',emoji:'📖',gradient:'from-emerald-400 to-teal-500'},{id:'english',name:'إنجليزي',icon:'fa-language',emoji:'🇬🇧',gradient:'from-rose-400 to-red-500'},{id:'french',name:'فرنساوي',icon:'fa-font',emoji:'🇫🇷',gradient:'from-pink-400 to-rose-500'},{id:'physics',name:'فيزياء',icon:'fa-magnet',emoji:'⚛️',gradient:'from-cyan-400 to-blue-500'},{id:'chemistry',name:'كيمياء',icon:'fa-vial',emoji:'🧪',gradient:'from-indigo-400 to-purple-500'},{id:'biology',name:'أحياء',icon:'fa-leaf',emoji:'🧬',gradient:'from-lime-400 to-green-500'},{id:'history',name:'تاريخ',icon:'fa-landmark',emoji:'🏛️',gradient:'from-amber-400 to-yellow-600'},{id:'geography',name:'جغرافيا',icon:'fa-map-marked-alt',emoji:'🗺️',gradient:'from-orange-400 to-red-500'},{id:'math',name:'رياضيات',icon:'fa-calculator',emoji:'🧮',gradient:'from-blue-400 to-cyan-500'} ]
+        primary: [
+            {id:'arabic',name:'لغة عربية',icon:'fa-book-open',emoji:'📖',gradient:'from-emerald-400 to-teal-500'},
+            {id:'math',name:'رياضيات',icon:'fa-calculator',emoji:'🧮',gradient:'from-blue-400 to-cyan-500'},
+            {id:'science',name:'علوم',icon:'fa-flask',emoji:'🔬',gradient:'from-purple-400 to-pink-500'},
+            {id:'english',name:'إنجليزي',icon:'fa-language',emoji:'🇬🇧',gradient:'from-rose-400 to-red-500'},
+            {id:'social',name:'دراسات',icon:'fa-globe-africa',emoji:'🌍',gradient:'from-amber-400 to-orange-500'},
+            {id:'religion',name:'دين',icon:'fa-mosque',emoji:'🕌',gradient:'from-teal-400 to-emerald-500'}
+        ],
+        prep: [
+            {id:'arabic',name:'لغة عربية',icon:'fa-book-open',emoji:'📖',gradient:'from-emerald-400 to-teal-500'},
+            {id:'math',name:'رياضيات',icon:'fa-calculator',emoji:'🧮',gradient:'from-blue-400 to-cyan-500'},
+            {id:'science',name:'علوم',icon:'fa-flask',emoji:'🔬',gradient:'from-purple-400 to-pink-500'},
+            {id:'english',name:'إنجليزي',icon:'fa-language',emoji:'🇬🇧',gradient:'from-rose-400 to-red-500'},
+            {id:'social',name:'دراسات',icon:'fa-globe-africa',emoji:'🌍',gradient:'from-amber-400 to-orange-500'},
+            {id:'computer',name:'حاسب',icon:'fa-laptop-code',emoji:'💻',gradient:'from-slate-400 to-gray-500'}
+        ],
+        sec: [
+            {id:'arabic',name:'عربي',icon:'fa-book-open',emoji:'📖',gradient:'from-emerald-400 to-teal-500'},
+            {id:'english',name:'إنجليزي',icon:'fa-language',emoji:'🇬🇧',gradient:'from-rose-400 to-red-500'},
+            {id:'french',name:'فرنساوي',icon:'fa-font',emoji:'🇫🇷',gradient:'from-pink-400 to-rose-500'},
+            {id:'physics',name:'فيزياء',icon:'fa-magnet',emoji:'⚛️',gradient:'from-cyan-400 to-blue-500'},
+            {id:'chemistry',name:'كيمياء',icon:'fa-vial',emoji:'🧪',gradient:'from-indigo-400 to-purple-500'},
+            {id:'biology',name:'أحياء',icon:'fa-leaf',emoji:'🧬',gradient:'from-lime-400 to-green-500'},
+            {id:'history',name:'تاريخ',icon:'fa-landmark',emoji:'🏛️',gradient:'from-amber-400 to-yellow-600'},
+            {id:'geography',name:'جغرافيا',icon:'fa-map-marked-alt',emoji:'🗺️',gradient:'from-orange-400 to-red-500'},
+            {id:'math',name:'رياضيات',icon:'fa-calculator',emoji:'🧮',gradient:'from-blue-400 to-cyan-500'}
+        ]
     };
     const base = defaults[stage] || [];
     const custom = (portal.dbData.customSubjects && portal.dbData.customSubjects[stage]) ? portal.dbData.customSubjects[stage] : [];
-    return [...base, ...custom.map(c => ({...c, gradient: 'from-violet-400 to-fuchsia-500', icon: c.icon || 'fa-star', emoji: c.emoji || '⭐'}))];
+    return [...base, ...custom.map(c => ({
+        ...c, 
+        gradient: c.gradient || 'from-violet-400 to-fuchsia-500', 
+        icon: c.icon || 'fa-star', 
+        emoji: c.emoji || '⭐'
+    }))];
 }
 
 const notify = (msg, type='success') => {
@@ -255,8 +387,8 @@ const portal = {
     sessionsTab: 'live',
     communityTab: 'forums',
     currentView: 'type',
-    currentFileFilter: { type: null, stage: null, grade: null },
-    activeVideoIndex: 0, // للتحكم في الفيديو النشط في الدرس
+    activeVideoIndex: 0,
+    fileFilter: 'all',
 
     init() {
         const s = localStorage.getItem('studentSession');
@@ -269,28 +401,41 @@ const portal = {
                     document.getElementById('guest-info').classList.add('hidden');
                     document.getElementById('student-name').innerText = p.username;
                     this.ensureStudentProfile();
-                } else localStorage.removeItem('studentSession');
+                } else {
+                    localStorage.removeItem('studentSession');
+                }
             } catch(e) { localStorage.removeItem('studentSession'); }
         }
         database.ref('/').on('value', snap => {
             this.dbData = snap.val() || {};
             this.applySettings();
-            this.renderHome();
-            if(this.path.subject) this.renderContent();
-            if(this.currentView === 'leaderboard') this.renderLeaderboard();
-            if(this.currentView === 'live-sessions') this.renderLiveSessions();
-            if(this.currentView === 'community') this.renderCommunity();
-            if(this.currentView === 'files') this.renderFilteredFiles();
-            if(this.currentView === 'stats' && this.session) this.renderMyStats();
+            this.refreshCurrentView();
         });
         setTimeout(() => this.openSharedContent(), 600);
-        setInterval(() => { if(this.session) { const e = Math.floor((Date.now()-this._studyStart)/60000); if(e>=1){ this.updateStudyTime(e); this._studyStart=Date.now(); } } }, 60000);
+        setInterval(() => { 
+            if(this.session) { 
+                const e = Math.floor((Date.now()-this._studyStart)/60000); 
+                if(e>=1){ this.updateStudyTime(e); this._studyStart=Date.now(); } 
+            } 
+        }, 60000);
         this._studyStart = Date.now();
-        // إعداد زر الاشتراك
+        
         document.getElementById('subscribe-btn')?.addEventListener('click', () => {
             const wa = (this.dbData.settings?.socialLinks?.whatsapp || '201234567890').replace(/[^0-9]/g,'');
             window.open(`https://wa.me/${wa}`, '_blank');
         });
+    },
+
+    refreshCurrentView() {
+        if(this.currentView === 'type') this.renderHome();
+        else if(this.currentView === 'stage') this.renderStagesCards();
+        else if(this.currentView === 'grade-subject') { /* grade selected already */ }
+        else if(this.currentView === 'content') this.renderContent();
+        else if(this.currentView === 'files') this.renderFilteredFiles();
+        else if(this.currentView === 'leaderboard') this.renderLeaderboard();
+        else if(this.currentView === 'live-sessions') this.renderLiveSessions();
+        else if(this.currentView === 'community') this.renderCommunity();
+        else if(this.currentView === 'stats' && this.session) this.renderMyStats();
     },
 
     ensureStudentProfile() {
@@ -307,9 +452,10 @@ const portal = {
 
     applySettings() {
         const set = this.dbData.settings || {};
-        document.getElementById('site-name-display').innerText = set.siteName || 'منصتي';
-        document.getElementById('footer-site-name').innerText = set.siteName || 'منصتي';
-        document.title = set.siteName || 'منصتي';
+        const siteName = set.siteName || 'منصتي';
+        document.getElementById('site-name-display').innerText = siteName;
+        document.getElementById('footer-site-name').innerText = siteName;
+        document.title = siteName;
         if(set.siteLogo) {
             document.getElementById('site-icon-default').classList.add('hidden');
             document.getElementById('site-logo-display').src = set.siteLogo;
@@ -318,20 +464,36 @@ const portal = {
             document.getElementById('site-icon-default').classList.remove('hidden');
             document.getElementById('site-logo-display').classList.add('hidden');
         }
+        // Social float
         const socialFloat = document.getElementById('social-float');
         const footerSocial = document.getElementById('footer-social');
         const sl = set.socialLinks || {};
         let fh = '', fh2 = '';
-        if(sl.whatsapp) { const wa = sl.whatsapp.replace(/[^0-9]/g,''); fh += `<a href="https://wa.me/${wa}" target="_blank" class="bg-emerald-500"><i class="fab fa-whatsapp"></i></a>`; fh2 += `<a href="https://wa.me/${wa}" target="_blank" class="text-emerald-400 text-2xl"><i class="fab fa-whatsapp"></i></a>`; }
-        if(sl.facebook) { fh += `<a href="${sl.facebook}" target="_blank" class="bg-blue-600"><i class="fab fa-facebook-f"></i></a>`; fh2 += `<a href="${sl.facebook}" target="_blank" class="text-blue-400 text-2xl"><i class="fab fa-facebook"></i></a>`; }
-        if(sl.youtube) { fh += `<a href="${sl.youtube}" target="_blank" class="bg-red-600"><i class="fab fa-youtube"></i></a>`; fh2 += `<a href="${sl.youtube}" target="_blank" class="text-red-400 text-2xl"><i class="fab fa-youtube"></i></a>`; }
-        socialFloat.innerHTML = fh; socialFloat.classList.toggle('hidden', !fh);
+        if(sl.whatsapp) { 
+            const wa = sl.whatsapp.replace(/[^0-9]/g,''); 
+            fh += `<a href="https://wa.me/${wa}" target="_blank" class="bg-emerald-500"><i class="fab fa-whatsapp"></i></a>`; 
+            fh2 += `<a href="https://wa.me/${wa}" target="_blank" class="text-emerald-400 text-2xl"><i class="fab fa-whatsapp"></i></a>`; 
+        }
+        if(sl.facebook) { 
+            fh += `<a href="${sl.facebook}" target="_blank" class="bg-blue-600"><i class="fab fa-facebook-f"></i></a>`; 
+            fh2 += `<a href="${sl.facebook}" target="_blank" class="text-blue-400 text-2xl"><i class="fab fa-facebook"></i></a>`; 
+        }
+        if(sl.youtube) { 
+            fh += `<a href="${sl.youtube}" target="_blank" class="bg-red-600"><i class="fab fa-youtube"></i></a>`; 
+            fh2 += `<a href="${sl.youtube}" target="_blank" class="text-red-400 text-2xl"><i class="fab fa-youtube"></i></a>`; 
+        }
+        socialFloat.innerHTML = fh; 
+        socialFloat.classList.toggle('hidden', !fh);
         footerSocial.innerHTML = fh2;
+        
+        // Announcement
         const ann = this.dbData.announcements;
         if(ann?.isActive && Date.now() < ann.expiry) {
             document.getElementById('announcement-box').classList.remove('hidden');
             document.getElementById('announcement-text').innerText = ann.text;
-        } else document.getElementById('announcement-box').classList.add('hidden');
+        } else {
+            document.getElementById('announcement-box').classList.add('hidden');
+        }
     },
 
     formatContent(text) {
@@ -343,14 +505,16 @@ const portal = {
         h = h.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
         h = h.replace(/\*(.+?)\*/g,'<em class="text-indigo-600">$1</em>');
         h = h.replace(/`(.+?)`/g,'<code class="bg-slate-100 text-pink-600 px-2 py-0.5 rounded-lg font-mono text-sm">$1</code>');
-        h = h.replace(/:::info (.+?) :::/g,'<div class="bg-blue-50 border-r-4 border-blue-500 p-4 rounded-2xl my-4"><span>ℹ️</span> $1</div>');
-        h = h.replace(/:::warning (.+?) :::/g,'<div class="bg-yellow-50 border-r-4 border-yellow-500 p-4 rounded-2xl my-4"><span>⚠️</span> $1</div>');
-        h = h.replace(/:::success (.+?) :::/g,'<div class="bg-emerald-50 border-r-4 border-emerald-500 p-4 rounded-2xl my-4"><span>✅</span> $1</div>');
-        h = h.replace(/:::danger (.+?) :::/g,'<div class="bg-red-50 border-r-4 border-red-500 p-4 rounded-2xl my-4"><span>🚫</span> $1</div>');
+        h = h.replace(/:::info (.+?) :::/g,'<div class="bg-blue-50 border-r-4 border-blue-500 p-4 rounded-2xl my-4"><span class="font-black text-blue-600">ℹ️</span> $1</div>');
+        h = h.replace(/:::warning (.+?) :::/g,'<div class="bg-yellow-50 border-r-4 border-yellow-500 p-4 rounded-2xl my-4"><span class="font-black text-yellow-600">⚠️</span> $1</div>');
+        h = h.replace(/:::success (.+?) :::/g,'<div class="bg-emerald-50 border-r-4 border-emerald-500 p-4 rounded-2xl my-4"><span class="font-black text-emerald-600">✅</span> $1</div>');
+        h = h.replace(/:::danger (.+?) :::/g,'<div class="bg-red-50 border-r-4 border-red-500 p-4 rounded-2xl my-4"><span class="font-black text-red-600">🚫</span> $1</div>');
         h = h.replace(/^- (.+)$/gm,'<li class="flex items-start gap-2 mb-2 font-bold text-slate-600"><span class="w-2 h-2 bg-blue-500 rounded-full mt-2 shrink-0"></span>$1</li>');
         h = h.replace(/((?:<li.*<\/li>\n?)+)/g,'<ul class="my-4 space-y-1 pr-4">$1</ul>');
         h = h.replace(/^> (.+)$/gm,'<blockquote class="border-r-4 border-amber-400 bg-amber-50 p-4 rounded-2xl my-4 text-amber-900 italic">$1</blockquote>');
         h = h.replace(/^---$/gm,'<hr class="my-6 border-slate-200">');
+        // Replace image markdown
+        h = h.replace(/!\[([^\]]*)\]\(([^)]+)\)/g,'<img src="$2" alt="$1" class="rounded-2xl my-4 max-w-full shadow-lg">');
         return h;
     },
 
@@ -361,222 +525,470 @@ const portal = {
         else if(type==='quiz') p.set('quiz',id);
         else if(type==='simulation') p.set('sim',id);
         else if(type==='subject') { p.set('type',this.path.type); p.set('stage',this.path.stage); p.set('grade',this.path.grade); p.set('subject',this.path.subject); }
-        else if(type==='stage') { p.set('type',this.path.type); p.set('stage',this.path.stage); }
-        else if(type==='type') p.set('type',this.path.type);
         else if(type==='file') p.set('file',id);
         const url = `${base}?${p.toString()}`;
         if(navigator.clipboard) {
-            navigator.clipboard.writeText(url).then(() => {
-                notify(`✅ تم نسخ رابط ${name}`);
-                database.ref('sharedLinks').push({type,targetId:id,createdAt:Date.now(),clicks:0});
-            }).catch(() => this.showShareModal(url,name));
-        } else this.showShareModal(url,name);
+            navigator.clipboard.writeText(url).then(() => notify(`✅ تم نسخ رابط ${name}`));
+        } else {
+            this.showShareModal(url, name);
+        }
     },
-    showShareModal(url,name) {
+
+    showShareModal(url, name) {
         const m = document.createElement('div');
         m.className = 'fixed inset-0 bg-slate-900/80 z-[99999] flex items-center justify-center p-4';
-        m.innerHTML = `<div class="bg-white rounded-3xl p-8 max-w-md w-full text-center"><h3 class="font-black text-2xl mb-4">🔗 مشاركة ${name}</h3><div class="bg-slate-100 p-4 rounded-xl mb-4 text-left break-all" dir="ltr">${url}</div><button onclick="navigator.clipboard.writeText('${url}');this.innerText='✅ تم النسخ'" class="bg-indigo-600 text-white py-3 px-6 rounded-xl font-black">نسخ الرابط</button></div>`;
+        m.innerHTML = `<div class="bg-white rounded-3xl p-8 max-w-md w-full text-center shadow-2xl"><h3 class="font-black text-2xl mb-4">🔗 مشاركة ${name}</h3><div class="bg-slate-100 p-4 rounded-xl mb-4 text-left break-all text-sm" dir="ltr">${url}</div><button onclick="navigator.clipboard.writeText('${url}');this.innerText='✅ تم النسخ'" class="bg-indigo-600 text-white py-3 px-6 rounded-xl font-black">نسخ الرابط</button><button onclick="this.parentElement.parentElement.remove()" class="mt-2 text-slate-400 block w-full">إغلاق</button></div>`;
         document.body.appendChild(m);
-        m.addEventListener('click',e=>{if(e.target===m)m.remove();});
+        m.addEventListener('click', e => { if(e.target === m) m.remove(); });
     },
 
     openSharedContent() {
         const p = new URLSearchParams(location.search);
-        if(p.get('lesson')) { const id=p.get('lesson'); if(this.dbData.lessons?.[id]) this.openContent('lesson',id); else notify('الدرس غير موجود','error'); }
-        else if(p.get('quiz')) { const id=p.get('quiz'); if(this.dbData.quizzes?.[id]) this.openContent('quiz',id); else notify('الاختبار غير موجود','error'); }
-        else if(p.get('sim')) { const id=p.get('sim'); if(this.dbData.simulations?.[id]) this.openContent('simulation',id); else notify('المحاكي غير موجود','error'); }
-        else if(p.get('file')) { const id=p.get('file'); if(this.dbData.files?.[id]) window.open(this.dbData.files[id].url,'_blank'); else notify('الملف غير موجود','error'); }
+        if(p.get('lesson')) { const id=p.get('lesson'); if(this.dbData.lessons?.[id]) this.openContent('lesson',id); }
+        else if(p.get('quiz')) { const id=p.get('quiz'); if(this.dbData.quizzes?.[id]) this.openContent('quiz',id); }
+        else if(p.get('sim')) { const id=p.get('sim'); if(this.dbData.simulations?.[id]) this.openContent('simulation',id); }
+        else if(p.get('file')) { const id=p.get('file'); if(this.dbData.files?.[id]) window.open(this.dbData.files[id].url,'_blank'); }
         else if(p.get('type') && p.get('stage') && p.get('grade') && p.get('subject')) {
-            this.path = { type:p.get('type'),typeName:p.get('type')==='public'?'تربية وتعليم':'أزهر',stage:p.get('stage'),stageName:'',grade:p.get('grade'),gradeName:'',subject:p.get('subject'),subjectName:'' };
+            this.path = {
+                type:p.get('type'), typeName:p.get('type')==='public'?'تربية وتعليم':'أزهر',
+                stage:p.get('stage'), stageName:'', grade:p.get('grade'), gradeName:'',
+                subject:p.get('subject'), subjectName:''
+            };
             this.hideAllViews(); document.getElementById('view-content').classList.remove('hidden');
             this.renderContent(); this.updateBreadcrumbs();
-        } else if(p.get('type') && p.get('stage')) {
-            this.selectType(p.get('type'), p.get('type')==='public'?'تربية وتعليم':'أزهر');
-            setTimeout(() => this.selectStage(p.get('stage'),''), 400);
-        } else if(p.get('type')) this.selectType(p.get('type'), p.get('type')==='public'?'تربية وتعليم':'أزهر');
+        }
     },
 
     hideAllViews() {
-        ['view-type','view-stage','view-grade-subject','view-content','view-page','view-leaderboard','view-live-sessions','view-community','view-stats','view-files'].forEach(id => document.getElementById(id).classList.add('hidden'));
+        ['view-type','view-stage','view-grade-subject','view-content','view-page','view-leaderboard','view-live-sessions','view-community','view-stats','view-files']
+            .forEach(id => document.getElementById(id).classList.add('hidden'));
     },
+
     goHome() {
         this.path = { type:null,typeName:'',stage:null,stageName:'',grade:null,gradeName:'',subject:null,subjectName:'' };
-        this.currentView = 'type'; this.currentFileFilter = { type:null,stage:null,grade:null };
-        this.hideAllViews(); document.getElementById('view-type').classList.remove('hidden');
+        this.currentView = 'type';
+        this.hideAllViews(); 
+        document.getElementById('view-type').classList.remove('hidden');
         document.getElementById('breadcrumbs-container').classList.add('hidden');
+        this.renderHome();
         window.scrollTo({top:0,behavior:'smooth'});
     },
+
     updateBreadcrumbs() {
         const bc = document.getElementById('breadcrumbs'), bcCont = document.getElementById('breadcrumbs-container');
         if(!this.path.type && this.currentView==='type') { bcCont.classList.add('hidden'); return; }
         bcCont.classList.remove('hidden');
-        let h = `<span class="cursor-pointer hover:text-blue-600 font-bold" onclick="portal.goHome()"><i class="fas fa-home"></i> الرئيسية</span>`;
+        let h = `<span class="cursor-pointer hover:text-blue-600 font-bold" onclick="portal.goHome()"><i class="fas fa-home ml-1"></i> الرئيسية</span>`;
         if(this.path.type) h += ` <i class="fas fa-chevron-left text-xs mx-1"></i> <span class="cursor-pointer hover:text-blue-600 font-bold" onclick="portal.selectType('${this.path.type}','${this.path.typeName}')">${this.path.typeName}</span>`;
         if(this.path.stage) h += ` <i class="fas fa-chevron-left text-xs mx-1"></i> <span class="cursor-pointer hover:text-blue-600 font-bold" onclick="portal.selectStage('${this.path.stage}','${this.path.stageName}')">${this.path.stageName}</span>`;
         if(this.path.grade) h += ` <i class="fas fa-chevron-left text-xs mx-1"></i> <span class="bg-blue-500 text-white px-3 py-1 rounded-xl font-bold">${this.path.gradeName}</span>`;
         if(this.path.subject) {
             h += ` <i class="fas fa-chevron-left text-xs mx-1"></i> <span class="text-blue-700 bg-blue-50 px-3 py-1 rounded-xl font-bold">${this.path.subjectName}</span>
-            <button onclick="portal.shareContent('subject','${this.path.subject}','${this.path.subjectName}')" class="bg-blue-500 text-white px-3 py-1 rounded-xl text-xs font-black"><i class="fas fa-share-alt"></i></button>`;
+            <button onclick="portal.shareContent('subject','${this.path.subject}','${this.path.subjectName}')" class="bg-blue-500 text-white px-3 py-1 rounded-xl text-xs font-black"><i class="fas fa-share-alt ml-1"></i> مشاركة</button>`;
         }
         bc.innerHTML = h;
     },
-    isVisible(key) { const vis = this.dbData.settings?.visibility || {}; return vis[key] !== false; },
-    openStaticPage(id) {
-        const set = this.dbData.settings || {}; let t='',c='';
-        if(id==='about'){t='من نحن';c=set.aboutText||'';} else if(id==='terms'){t='الشروط';c=set.termsText||'';} else if(id==='privacy'){t='الخصوصية';c=set.privacyText||'';}
-        document.getElementById('static-page-title').innerText = t; document.getElementById('static-page-content').innerText = c;
-        this.hideAllViews(); document.getElementById('view-page').classList.remove('hidden'); window.scrollTo({top:0});
-    },
-    openLoginModal() { document.getElementById('login-modal').classList.remove('hidden'); },
 
+    isVisible(key) { 
+        const vis = this.dbData.settings?.visibility || {}; 
+        return vis[key] !== false; 
+    },
+
+    openStaticPage(id) {
+        const set = this.dbData.settings || {}; 
+        let t='',c='';
+        if(id==='about'){t='من نحن';c=set.aboutText||'';} 
+        else if(id==='terms'){t='الشروط';c=set.termsText||'';} 
+        else if(id==='privacy'){t='الخصوصية';c=set.privacyText||'';}
+        document.getElementById('static-page-title').innerText = t; 
+        document.getElementById('static-page-content').innerHTML = this.formatContent(c) || '<p class="text-slate-400">لا يوجد محتوى بعد</p>';
+        this.hideAllViews(); 
+        document.getElementById('view-page').classList.remove('hidden'); 
+        window.scrollTo({top:0,behavior:'smooth'});
+    },
+
+    openLoginModal() { 
+        document.getElementById('login-modal').classList.remove('hidden'); 
+    },
+
+    // ==================== HOME RENDERING ====================
     renderHome() {
-        const tc = document.getElementById('types-container'); let th = '';
-        if(this.isVisible('type_public')) th += `<div onclick="portal.selectType('public','تربية وتعليم')" class="card-hover bg-white rounded-[2.5rem] p-8 text-center shadow-2xl cursor-pointer"><div class="w-28 h-28 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-5xl mx-auto mb-6 floating"><i class="fas fa-school"></i></div><h3 class="text-3xl font-black">تربية وتعليم</h3><p class="text-slate-500 font-bold text-lg">المنهج العام</p></div>`;
-        if(this.isVisible('type_azhar')) th += `<div onclick="portal.selectType('azhar','أزهر شريف')" class="card-hover bg-white rounded-[2.5rem] p-8 text-center shadow-2xl cursor-pointer"><div class="w-28 h-28 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-5xl mx-auto mb-6 floating"><i class="fas fa-book-open"></i></div><h3 class="text-3xl font-black">أزهر شريف</h3><p class="text-slate-500 font-bold text-lg">المنهج الأزهري</p></div>`;
-        th += `<div onclick="portal.openFilesHome()" class="card-hover bg-white rounded-[2.5rem] p-8 text-center shadow-2xl cursor-pointer border-2 border-cyan-200"><div class="w-28 h-28 bg-gradient-to-br from-cyan-100 to-blue-100 text-cyan-600 rounded-full flex items-center justify-center text-5xl mx-auto mb-6 floating"><i class="fas fa-book"></i></div><h3 class="text-3xl font-black">الكتب والمذكرات</h3><p class="text-slate-500 font-bold text-lg">ملفات وروابط جميع المراحل</p></div>`;
+        const tc = document.getElementById('types-container'); 
+        let th = '';
+        if(this.isVisible('type_public')) th += `<div onclick="portal.selectType('public','تربية وتعليم')" class="card-hover bg-white rounded-[2.5rem] p-8 text-center shadow-2xl cursor-pointer"><div class="w-28 h-28 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-5xl mx-auto mb-6 floating"><i class="fas fa-school"></i></div><h3 class="text-3xl font-black mb-2">تربية وتعليم</h3><p class="text-slate-500 font-bold text-lg">المنهج العام</p></div>`;
+        if(this.isVisible('type_azhar')) th += `<div onclick="portal.selectType('azhar','أزهر شريف')" class="card-hover bg-white rounded-[2.5rem] p-8 text-center shadow-2xl cursor-pointer"><div class="w-28 h-28 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-5xl mx-auto mb-6 floating"><i class="fas fa-book-open"></i></div><h3 class="text-3xl font-black mb-2">أزهر شريف</h3><p class="text-slate-500 font-bold text-lg">المنهج الأزهري</p></div>`;
+        th += `<div onclick="portal.openFilesHome()" class="card-hover bg-white rounded-[2.5rem] p-8 text-center shadow-2xl cursor-pointer border-2 border-cyan-200"><div class="w-28 h-28 bg-gradient-to-br from-cyan-100 to-blue-100 text-cyan-600 rounded-full flex items-center justify-center text-5xl mx-auto mb-6 floating"><i class="fas fa-book"></i></div><h3 class="text-3xl font-black mb-2">الكتب والمذكرات</h3><p class="text-slate-500 font-bold text-lg">ملفات ومراجع جميع المراحل</p></div>`;
         tc.innerHTML = th;
+
+        // News ticker
         const posts = Object.values(this.dbData.posts||{}).sort((a,b)=>(b.date||0)-(a.date||0));
         const ticker = document.getElementById('news-ticker');
         if(posts.length) {
             ticker.classList.remove('hidden');
-            ticker.innerHTML = `<div class="flex items-center gap-3 mb-5"><div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center text-white"><i class="fas fa-newspaper"></i></div><h3 class="font-black text-xl">📰 أحدث الأخبار</h3></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4">${posts.slice(0,4).map(p=>`<div class="bg-white/70 p-5 rounded-2xl"><h4 class="font-black text-indigo-900">📌 ${p.title}</h4><p class="text-sm text-slate-600">${p.content}</p></div>`).join('')}</div>`;
-        } else ticker.classList.add('hidden');
+            ticker.innerHTML = `<div class="flex items-center gap-3 mb-5"><div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center text-white"><i class="fas fa-newspaper"></i></div><h3 class="font-black text-xl">📰 أحدث الأخبار</h3></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4">${posts.slice(0,4).map(p=>`<div class="bg-white/70 p-5 rounded-2xl"><h4 class="font-black text-indigo-900">📌 ${p.title}</h4><p class="text-sm text-slate-600 mt-2">${p.content}</p>${p.image?`<img src="${p.image}" class="rounded-xl mt-3 max-h-48 object-cover w-full">`:''}</div>`).join('')}</div>`;
+        } else {
+            ticker.classList.add('hidden');
+        }
     },
 
+    // ==================== FILES ====================
     openFilesHome() {
-        this.currentView='files'; this.currentFileFilter={type:null,stage:null,grade:null};
+        this.currentView='files'; this.fileFilter='all';
         this.hideAllViews(); document.getElementById('view-files').classList.remove('hidden');
         document.getElementById('breadcrumbs-container').classList.remove('hidden');
-        document.getElementById('breadcrumbs').innerHTML = `<span class="cursor-pointer hover:text-blue-600 font-bold" onclick="portal.goHome()"><i class="fas fa-home"></i> الرئيسية</span><i class="fas fa-chevron-left text-xs mx-1"></i><span class="bg-cyan-500 text-white px-3 py-1 rounded-xl font-bold"><i class="fas fa-book"></i> الكتب والمذكرات</span>`;
-        this.renderFilteredFiles(); window.scrollTo({top:0});
+        document.getElementById('breadcrumbs').innerHTML = `<span class="cursor-pointer hover:text-blue-600 font-bold" onclick="portal.goHome()"><i class="fas fa-home ml-1"></i> الرئيسية</span><i class="fas fa-chevron-left text-xs mx-1"></i><span class="bg-cyan-500 text-white px-3 py-1 rounded-xl font-bold"><i class="fas fa-book ml-1"></i> الكتب والمذكرات</span>`;
+        this.updateFileFilterButtons();
+        this.renderFilteredFiles(); 
+        window.scrollTo({top:0});
     },
+
+    setFileFilter: (filter) => {
+        this.fileFilter = filter;
+        this.updateFileFilterButtons();
+        this.renderFilteredFiles();
+    },
+
+    updateFileFilterButtons: () => {
+        document.querySelectorAll('[id^="file-filter-"]').forEach(b => b.classList.remove('bg-slate-800','text-white'));
+        document.querySelectorAll('[id^="file-filter-"]').forEach(b => { b.classList.add('bg-slate-100','text-slate-600'); });
+        const activeBtn = document.getElementById(`file-filter-${this.fileFilter}`);
+        if(activeBtn) { activeBtn.classList.remove('bg-slate-100','text-slate-600'); activeBtn.classList.add('bg-slate-800','text-white'); }
+    },
+
     renderFilteredFiles() {
         let files = Object.entries(this.dbData.files||{}).map(([id,v])=>({id,...v}));
-        if(this.currentFileFilter.type) files = files.filter(f=>f.type===this.currentFileFilter.type);
-        if(this.currentFileFilter.stage) files = files.filter(f=>f.stage===this.currentFileFilter.stage);
-        if(this.currentFileFilter.grade) files = files.filter(f=>f.grade===this.currentFileFilter.grade);
+        if(this.fileFilter !== 'all') files = files.filter(f=>f.type===this.fileFilter);
         files.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
         const container = document.getElementById('files-filtered-container');
-        if(!files.length) { container.innerHTML='<p class="col-span-full text-center text-slate-400 font-bold py-12">لا توجد ملفات</p>'; return; }
+        if(!files.length) { container.innerHTML='<p class="col-span-full text-center text-slate-400 font-bold py-12">لا توجد ملفات في هذا القسم</p>'; return; }
         container.innerHTML = files.map((f,i)=>`
             <div class="bg-white p-5 rounded-2xl shadow-md border card-hover cursor-pointer" onclick="window.open('${f.url}','_blank')" style="animation: fadeInUp 0.4s ${i*0.1}s both;">
-                <div class="flex items-center gap-3 mb-3"><div class="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center text-white"><i class="fas ${f.icon||'fa-file-pdf'}"></i></div><h5 class="font-black flex-1">${f.title}</h5><button onclick="event.stopPropagation(); portal.shareContent('file','${f.id}','${f.title.replace(/'/g,"\\'")}')" class="text-blue-500 bg-blue-50 p-2 rounded-xl"><i class="fas fa-share-alt"></i></button></div>
-                <div class="flex gap-2 text-[10px]"><span class="bg-slate-100 px-2 py-0.5 rounded-lg">${f.type==='public'?'عام':'أزهر'}</span><span class="bg-slate-100 px-2 py-0.5 rounded-lg">${f.stage==='primary'?'ابتدائي':f.stage==='prep'?'إعدادي':'ثانوي'}</span><span class="bg-slate-100 px-2 py-0.5 rounded-lg">صف ${f.grade}</span>${f.subject?`<span class="bg-slate-100 px-2 py-0.5 rounded-lg">${f.subject}</span>`:''}</div>
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center text-white"><i class="fas ${f.icon||'fa-file-pdf'}"></i></div>
+                    <h5 class="font-black flex-1 text-sm">${f.title}</h5>
+                    <button onclick="event.stopPropagation(); portal.shareContent('file','${f.id}','${f.title.replace(/'/g,"\\'")}')" class="text-blue-500 bg-blue-50 p-2 rounded-xl hover:bg-blue-100"><i class="fas fa-share-alt"></i></button>
+                </div>
+                <div class="flex flex-wrap gap-2 text-[10px]">
+                    <span class="bg-slate-100 px-2 py-0.5 rounded-lg font-bold">${f.type==='public'?'عام':'أزهر'}</span>
+                    <span class="bg-slate-100 px-2 py-0.5 rounded-lg font-bold">${f.stage==='primary'?'ابتدائي':f.stage==='prep'?'إعدادي':'ثانوي'}</span>
+                    <span class="bg-slate-100 px-2 py-0.5 rounded-lg font-bold">صف ${f.grade}</span>
+                    ${f.subject?`<span class="bg-slate-100 px-2 py-0.5 rounded-lg font-bold">${f.subject}</span>`:''}
+                </div>
             </div>`).join('');
     },
 
+    // ==================== TYPE & STAGE SELECTION ====================
     selectType(type, name) {
         this.path = { type, typeName:name, stage:null,stageName:'',grade:null,gradeName:'',subject:null,subjectName:'' };
-        this.renderStagesCards(); this.hideAllViews(); document.getElementById('view-stage').classList.remove('hidden');
-        window.scrollTo({top:0}); this.updateBreadcrumbs();
+        this.currentView = 'stage';
+        this.renderStagesCards(); 
+        this.hideAllViews(); 
+        document.getElementById('view-stage').classList.remove('hidden');
+        window.scrollTo({top:0}); 
+        this.updateBreadcrumbs();
     },
+
     renderStagesCards() {
-        const stages = [{id:'primary',name:'الابتدائية',icon:'fa-child',emoji:'🎒',gradient:'from-blue-400 to-sky-500'},{id:'prep',name:'الإعدادية',icon:'fa-user-graduate',emoji:'📝',gradient:'from-indigo-400 to-purple-500'},{id:'sec',name:'الثانوية',icon:'fa-user-tie',emoji:'🎓',gradient:'from-emerald-400 to-teal-500'}].filter(s=>this.isVisible(`stage_${this.path.type}_${s.id}`));
-        document.getElementById('stages-container').innerHTML = stages.map((s,i)=>`<div onclick="portal.selectStage('${s.id}','${s.name}')" class="card-hover bg-white rounded-3xl p-8 text-center shadow-xl cursor-pointer" style="animation: fadeInUp 0.5s ${i*0.15}s both;"><div class="text-5xl mb-4">${s.emoji}</div><div class="w-20 h-20 mx-auto bg-gradient-to-br ${s.gradient} rounded-2xl flex items-center justify-center text-3xl text-white mb-5"><i class="fas ${s.icon}"></i></div><h3 class="text-2xl font-black">${s.name}</h3></div>`).join('');
+        const stages = [
+            {id:'primary',name:'الابتدائية',icon:'fa-child',emoji:'🎒',gradient:'from-blue-400 to-sky-500'},
+            {id:'prep',name:'الإعدادية',icon:'fa-user-graduate',emoji:'📝',gradient:'from-indigo-400 to-purple-500'},
+            {id:'sec',name:'الثانوية',icon:'fa-user-tie',emoji:'🎓',gradient:'from-emerald-400 to-teal-500'}
+        ].filter(s=>this.isVisible(`stage_${this.path.type}_${s.id}`));
+        document.getElementById('stages-container').innerHTML = stages.map((s,i)=>`
+            <div onclick="portal.selectStage('${s.id}','${s.name}')" class="card-hover bg-white rounded-3xl p-8 text-center shadow-xl cursor-pointer" style="animation: fadeInUp 0.5s ${i*0.15}s both;">
+                <div class="text-5xl mb-4">${s.emoji}</div>
+                <div class="w-20 h-20 mx-auto bg-gradient-to-br ${s.gradient} rounded-2xl flex items-center justify-center text-3xl text-white mb-5"><i class="fas ${s.icon}"></i></div>
+                <h3 class="text-2xl font-black">${s.name}</h3>
+            </div>`).join('');
     },
+
     selectStage(stage, name) {
         this.path.stage=stage; this.path.stageName=name; this.path.grade=null; this.path.subject=null;
-        const arr=stage==='primary'?[4,5,6]:[1,2,3], labels=stage==='primary'?['الرابع','الخامس','السادس']:['الأول','الثاني','الثالث'], emojis=stage==='primary'?['4️⃣','5️⃣','6️⃣']:['1️⃣','2️⃣','3️⃣'];
-        let html=''; arr.forEach((g,i)=>{ if(this.isVisible(`grade_${this.path.type}_${stage}_${g}`)) html+=`<div onclick="portal.selectGrade('${g}','الصف ${labels[i]}')" id="btn-g-${g}" class="bg-white border-2 rounded-2xl p-5 text-center cursor-pointer card-hover"><span class="text-3xl block mb-2">${emojis[i]}</span><h4 class="font-black text-lg">الصف ${labels[i]}</h4></div>`; });
-        document.getElementById('grade-buttons').innerHTML=html; document.getElementById('subjects-container').classList.add('hidden');
-        this.hideAllViews(); document.getElementById('view-grade-subject').classList.remove('hidden'); window.scrollTo({top:0}); this.updateBreadcrumbs();
+        this.currentView = 'grade-subject';
+        const arr=stage==='primary'?[4,5,6]:[1,2,3], 
+              labels=stage==='primary'?['الرابع','الخامس','السادس']:['الأول','الثاني','الثالث'], 
+              emojis=stage==='primary'?['4️⃣','5️⃣','6️⃣']:['1️⃣','2️⃣','3️⃣'];
+        let html=''; 
+        arr.forEach((g,i)=>{ 
+            if(this.isVisible(`grade_${this.path.type}_${stage}_${g}`)) 
+                html+=`<div onclick="portal.selectGrade('${g}','الصف ${labels[i]}')" id="btn-g-${g}" class="bg-white border-2 rounded-2xl p-5 text-center cursor-pointer card-hover"><span class="text-3xl block mb-2">${emojis[i]}</span><h4 class="font-black text-lg">الصف ${labels[i]}</h4></div>`; 
+        });
+        document.getElementById('grade-buttons').innerHTML=html; 
+        document.getElementById('subjects-container').classList.add('hidden');
+        this.hideAllViews(); 
+        document.getElementById('view-grade-subject').classList.remove('hidden'); 
+        window.scrollTo({top:0}); 
+        this.updateBreadcrumbs();
     },
+
     selectGrade(grade, name) {
         this.path.grade=grade; this.path.gradeName=name; this.path.subject=null;
         document.querySelectorAll('#grade-buttons > div').forEach(b=>b.classList.remove('border-blue-400','shadow-xl'));
         document.getElementById(`btn-g-${grade}`)?.classList.add('border-blue-400','shadow-xl');
         const subs = getSubjectsForStage(this.path.stage).filter(s=>this.isVisible(`subject_${this.path.type}_${this.path.stage}_${grade}_${s.id}`));
-        document.getElementById('subjects-grid').innerHTML = subs.map((s,i)=>`<div onclick="portal.selectSubject('${s.id}','${s.name}')" class="card-hover bg-white rounded-3xl p-6 text-center shadow-lg cursor-pointer" style="animation: fadeInUp 0.4s ${i*0.08}s both;"><div class="text-5xl mb-3">${s.emoji||'📚'}</div><div class="w-14 h-14 mx-auto bg-gradient-to-br ${s.gradient} rounded-2xl flex items-center justify-center text-white text-xl mb-3"><i class="fas ${s.icon||'fa-star'}"></i></div><h4 class="font-black text-base">${s.name}</h4></div>`).join('');
-        document.getElementById('subjects-container').classList.remove('hidden'); this.updateBreadcrumbs();
+        document.getElementById('subjects-grid').innerHTML = subs.map((s,i)=>`
+            <div onclick="portal.selectSubject('${s.id}','${s.name}')" class="card-hover bg-white rounded-3xl p-6 text-center shadow-lg cursor-pointer" style="animation: fadeInUp 0.4s ${i*0.08}s both;">
+                <div class="text-5xl mb-3">${s.emoji||'📚'}</div>
+                <div class="w-14 h-14 mx-auto bg-gradient-to-br ${s.gradient} rounded-2xl flex items-center justify-center text-white text-xl mb-3"><i class="fas ${s.icon||'fa-star'}"></i></div>
+                <h4 class="font-black text-base">${s.name}</h4>
+            </div>`).join('');
+        document.getElementById('subjects-container').classList.remove('hidden'); 
+        this.updateBreadcrumbs();
         document.getElementById('view-content').classList.add('hidden');
     },
+
     selectSubject(subId, subName) {
         this.path.subject=subId; this.path.subjectName=subName;
-        this.hideAllViews(); document.getElementById('view-content').classList.remove('hidden');
-        window.scrollTo({top:0}); this.updateBreadcrumbs(); this.renderContent();
+        this.currentView = 'content';
+        this.hideAllViews(); 
+        document.getElementById('view-content').classList.remove('hidden');
+        window.scrollTo({top:0}); 
+        this.updateBreadcrumbs(); 
+        this.renderContent();
     },
 
+    // ==================== CONTENT RENDERING ====================
     renderContent() {
         const p=this.path;
-        const lessons = Object.entries(this.dbData.lessons||{}).map(([id,v])=>({id,...v})).filter(l=>l.type===p.type&&l.stage===p.stage&&l.grade===p.grade&&l.subject===p.subject&&!l.isHidden).reverse();
+        const lessons = Object.entries(this.dbData.lessons||{})
+            .map(([id,v])=>({id,...v}))
+            .filter(l=>l.type===p.type&&l.stage===p.stage&&l.grade===p.grade&&l.subject===p.subject&&!l.isHidden)
+            .reverse();
         const uList=document.getElementById('units-list');
-        if(!lessons.length) uList.innerHTML='<div class="text-center py-20"><div class="text-7xl mb-4">📭</div><h3 class="text-2xl font-black text-slate-400">لا توجد دروس</h3></div>';
-        else {
-            const grouped={}; lessons.forEach(l=>{const u=l.unit||1; if(!grouped[u])grouped[u]=[];grouped[u].push(l);});
-            let html=''; Object.keys(grouped).sort((a,b)=>a-b).forEach(uNum=>{
+        if(!lessons.length) {
+            uList.innerHTML='<div class="text-center py-20"><div class="text-7xl mb-4">📭</div><h3 class="text-2xl font-black text-slate-400">لا توجد دروس لهذه المادة بعد</h3></div>';
+        } else {
+            const grouped={}; 
+            lessons.forEach(l=>{const u=l.unit||1; if(!grouped[u])grouped[u]=[];grouped[u].push(l);});
+            let html=''; 
+            Object.keys(grouped).sort((a,b)=>a-b).forEach(uNum=>{
                 html+=`<div><div class="flex items-center gap-4 mb-6"><div class="w-14 h-14 bg-indigo-400 rounded-2xl flex items-center justify-center text-white text-2xl"><i class="fas fa-layer-group"></i></div><div><h3 class="text-2xl font-black text-indigo-900">${unitNames[uNum]||'الوحدة '+uNum}</h3></div></div><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">`;
-                grouped[uNum].forEach((l,i)=>html+=`<div onclick="portal.attemptAccess('lesson','${l.id}',${l.isLocked||false})" class="card-hover bg-white rounded-2xl border overflow-hidden shadow-md cursor-pointer" style="animation: fadeInUp 0.5s ${i*0.1}s both;"><div class="relative h-40 bg-gradient-to-br from-slate-50 to-indigo-50 flex items-center justify-center"><i class="fas fa-play-circle text-5xl text-indigo-400"></i><div class="absolute top-3 right-3"><button onclick="event.stopPropagation(); portal.shareContent('lesson','${l.id}','${l.title.replace(/'/g,"\\'")}')" class="bg-white/90 text-blue-600 w-8 h-8 rounded-full flex items-center justify-center shadow-md"><i class="fas fa-share-alt"></i></button></div><div class="absolute top-3 left-3 ${l.isLocked?'bg-slate-900/80 text-yellow-400':'bg-emerald-500/80 text-white'} text-[10px] font-black px-3 py-1.5 rounded-full">${l.isLocked?'🔒 VIP':'مجاني'}</div></div><div class="p-5"><h4 class="font-black text-sm">${l.title}</h4><div class="flex justify-between text-xs text-slate-400 mt-2"><span><i class="fas fa-video"></i> ${l.videos?.length||0} فيديو</span><span><i class="fas fa-tasks"></i> ${l.questions?.length||0} سؤال</span></div></div></div>`);
+                grouped[uNum].forEach((l,i)=>html+=`
+                    <div onclick="portal.attemptAccess('lesson','${l.id}',${l.isLocked||false})" class="card-hover bg-white rounded-2xl border overflow-hidden shadow-md cursor-pointer" style="animation: fadeInUp 0.5s ${i*0.1}s both;">
+                        <div class="relative h-40 bg-gradient-to-br from-slate-50 to-indigo-50 flex items-center justify-center">
+                            ${l.imageUrl ? `<img src="${l.imageUrl}" class="w-full h-full object-cover">` : `<i class="fas fa-play-circle text-5xl text-indigo-400"></i>`}
+                            <div class="absolute top-3 right-3"><button onclick="event.stopPropagation(); portal.shareContent('lesson','${l.id}','${l.title.replace(/'/g,"\\'")}')" class="bg-white/90 text-blue-600 w-8 h-8 rounded-full flex items-center justify-center shadow-md"><i class="fas fa-share-alt"></i></button></div>
+                            <div class="absolute top-3 left-3 ${l.isLocked?'bg-slate-900/80 text-yellow-400':'bg-emerald-500/80 text-white'} text-[10px] font-black px-3 py-1.5 rounded-full">${l.isLocked?'🔒 VIP':'🆓 مجاني'}</div>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-black text-sm">${l.title}</h4>
+                            <div class="flex justify-between text-xs text-slate-400 mt-2">
+                                <span><i class="fas fa-video ml-1"></i> ${l.videos?.length||0} فيديو</span>
+                                <span><i class="fas fa-tasks ml-1"></i> ${l.questions?.length||0} سؤال</span>
+                            </div>
+                        </div>
+                    </div>`);
                 html+='</div></div>';
             });
             uList.innerHTML=html;
         }
-        const quizzes = Object.entries(this.dbData.quizzes||{}).map(([id,v])=>({id,...v})).filter(q=>q.type===p.type&&q.stage===p.stage&&q.grade===p.grade&&q.subject===p.subject&&!q.isHidden).reverse();
-        const qSec=document.getElementById('quizzes-section'); const qList=document.getElementById('quizzes-list');
-        if(quizzes.length) { qSec.classList.remove('hidden'); qList.innerHTML=quizzes.map(q=>`<div onclick="portal.attemptAccess('quiz','${q.id}',${q.isLocked||false})" class="card-hover bg-white p-5 rounded-2xl shadow-md flex items-center justify-between cursor-pointer"><div class="flex items-center gap-3"><div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-xl"><i class="fas fa-file-signature"></i></div><div><h4 class="font-black">${q.name}</h4><p class="text-xs">${q.questions?.length||0} سؤال</p></div></div><div class="flex items-center gap-2"><button onclick="event.stopPropagation(); portal.shareContent('quiz','${q.id}','${q.name.replace(/'/g,"\\'")}')" class="text-blue-500 bg-blue-50 p-2 rounded-xl"><i class="fas fa-share-alt"></i></button>${q.isLocked?'<i class="fas fa-lock text-yellow-500"></i>':'<i class="fas fa-chevron-left text-slate-300"></i>'}</div></div>`).join(''); } else qSec.classList.add('hidden');
-        const sims = Object.entries(this.dbData.simulations||{}).map(([id,v])=>({id,...v})).filter(s=>s.type===p.type&&s.stage===p.stage&&s.grade===p.grade&&!s.isHidden).reverse();
-        const sSec=document.getElementById('simulations-section'); const sList=document.getElementById('simulations-list');
-        if(sims.length) { sSec.classList.remove('hidden'); sList.innerHTML=sims.map(s=>`<div onclick="portal.attemptAccess('simulation','${s.id}',${s.isLocked||false})" class="card-hover bg-yellow-50 p-5 rounded-2xl shadow-md flex items-center justify-between cursor-pointer"><div class="flex items-center gap-3"><div class="w-12 h-12 bg-yellow-400 text-white rounded-2xl flex items-center justify-center text-xl"><i class="fas fa-stopwatch"></i></div><div><h4 class="font-black text-yellow-900">${s.name}</h4><p class="text-xs">⏱️ ${s.time} دقيقة</p></div></div><div class="flex items-center gap-2"><button onclick="event.stopPropagation(); portal.shareContent('simulation','${s.id}','${s.name.replace(/'/g,"\\'")}')" class="text-yellow-500 bg-yellow-50 p-2 rounded-xl"><i class="fas fa-share-alt"></i></button><button class="bg-yellow-400 text-white px-4 py-2 rounded-xl font-black text-sm">ابدأ</button></div></div>`).join(''); } else sSec.classList.add('hidden');
+
+        // Quizzes
+        const quizzes = Object.entries(this.dbData.quizzes||{})
+            .map(([id,v])=>({id,...v}))
+            .filter(q=>q.type===p.type&&q.stage===p.stage&&q.grade===p.grade&&q.subject===p.subject&&!q.isHidden)
+            .reverse();
+        const qSec=document.getElementById('quizzes-section'); 
+        const qList=document.getElementById('quizzes-list');
+        if(quizzes.length) { 
+            qSec.classList.remove('hidden'); 
+            qList.innerHTML=quizzes.map(q=>`
+                <div onclick="portal.attemptAccess('quiz','${q.id}',${q.isLocked||false})" class="card-hover bg-white p-5 rounded-2xl shadow-md flex items-center justify-between cursor-pointer">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-xl"><i class="fas fa-file-signature"></i></div>
+                        <div><h4 class="font-black">${q.name}</h4><p class="text-xs text-slate-400">${q.questions?.length||0} سؤال | ${q.unit==0?'شامل':'الوحدة '+q.unit}</p></div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="event.stopPropagation(); portal.shareContent('quiz','${q.id}','${q.name.replace(/'/g,"\\'")}')" class="text-blue-500 bg-blue-50 p-2 rounded-xl hover:bg-blue-100"><i class="fas fa-share-alt"></i></button>
+                        ${q.isLocked?'<i class="fas fa-lock text-yellow-500"></i>':'<i class="fas fa-chevron-left text-slate-300"></i>'}
+                    </div>
+                </div>`).join(''); 
+        } else qSec.classList.add('hidden');
+
+        // Simulations
+        const sims = Object.entries(this.dbData.simulations||{})
+            .map(([id,v])=>({id,...v}))
+            .filter(s=>s.type===p.type&&s.stage===p.stage&&s.grade===p.grade&&!s.isHidden)
+            .reverse();
+        const sSec=document.getElementById('simulations-section'); 
+        const sList=document.getElementById('simulations-list');
+        if(sims.length) { 
+            sSec.classList.remove('hidden'); 
+            sList.innerHTML=sims.map(s=>`
+                <div onclick="portal.attemptAccess('simulation','${s.id}',${s.isLocked||false})" class="card-hover bg-yellow-50 p-5 rounded-2xl shadow-md flex items-center justify-between cursor-pointer border border-yellow-200">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-yellow-400 text-white rounded-2xl flex items-center justify-center text-xl"><i class="fas fa-stopwatch"></i></div>
+                        <div><h4 class="font-black text-yellow-900">${s.name}</h4><p class="text-xs text-yellow-600">⏱️ ${s.time} دقيقة</p></div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="event.stopPropagation(); portal.shareContent('simulation','${s.id}','${s.name.replace(/'/g,"\\'")}')" class="text-yellow-600 bg-yellow-100 p-2 rounded-xl hover:bg-yellow-200"><i class="fas fa-share-alt"></i></button>
+                        <button class="bg-yellow-400 text-white px-4 py-2 rounded-xl font-black text-sm">ابدأ</button>
+                    </div>
+                </div>`).join(''); 
+        } else sSec.classList.add('hidden');
     },
 
-    openLeaderboard() { this.currentView='leaderboard'; this.hideAllViews(); document.getElementById('view-leaderboard').classList.remove('hidden'); this.renderLeaderboard(); window.scrollTo({top:0}); },
-    switchLeaderboardTab(tab,btn) { this.leaderboardTab=tab; document.querySelectorAll('#view-leaderboard .tab-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); this.renderLeaderboard(); },
+    // ==================== LEADERBOARD ====================
+    openLeaderboard() { 
+        this.currentView='leaderboard'; 
+        this.hideAllViews(); 
+        document.getElementById('view-leaderboard').classList.remove('hidden'); 
+        this.renderLeaderboard(); 
+        window.scrollTo({top:0}); 
+    },
+    
+    switchLeaderboardTab(tab,btn) { 
+        this.leaderboardTab=tab; 
+        document.querySelectorAll('#view-leaderboard .tab-btn').forEach(b=>b.classList.remove('active')); 
+        btn.classList.add('active'); 
+        this.renderLeaderboard(); 
+    },
+    
     renderLeaderboard() {
         const data = (this.dbData.leaderboard||{})[this.leaderboardTab] || {};
         const sorted = Object.entries(data).map(([n,v])=>({name:n,...v})).sort((a,b)=>(b.xp||0)-(a.xp||0));
-        document.getElementById('leaderboard-list').innerHTML = sorted.length ? sorted.map((e,i)=>`<div class="glass-card p-5 rounded-2xl flex items-center gap-4"><span class="text-2xl font-black w-12 text-center">${i<3?['🥇','🥈','🥉'][i]:i+1}</span><div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center font-black">${e.name?.charAt(0)||'؟'}</div><div class="flex-1"><h4 class="font-black">${e.name||'مجهول'}</h4></div><span class="font-black text-indigo-600">${e.xp||0} XP</span></div>`).join('') : '<p class="text-center py-12 text-slate-400">لا توجد بيانات</p>';
+        document.getElementById('leaderboard-list').innerHTML = sorted.length ? sorted.map((e,i)=>`
+            <div class="glass-card p-5 rounded-2xl flex items-center gap-4">
+                <span class="text-2xl font-black w-12 text-center">${i<3?['🥇','🥈','🥉'][i]:i+1}</span>
+                <div class="w-10 h-10 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-full flex items-center justify-center font-black text-white">${e.name?.charAt(0)||'؟'}</div>
+                <div class="flex-1"><h4 class="font-black">${e.name||'مجهول'}</h4></div>
+                <span class="font-black text-indigo-600">${e.xp||0} XP</span>
+            </div>`).join('') : '<p class="text-center py-12 text-slate-400 font-bold">لا توجد بيانات لهذه الفترة</p>';
     },
+
     updateLeaderboard(xp,quizzesSolved,averageScore) {
         if(!this.session) return;
         const name=this.session.username;
         ['daily','weekly','monthly','allTime'].forEach(period=>{
             database.ref(`leaderboard/${period}/${name}`).transaction(current=>{
                 if(!current) return {xp,quizzesSolved,averageScore,timestamp:Date.now()};
-                return {xp:(current.xp||0)+xp,quizzesSolved:(current.quizzesSolved||0)+quizzesSolved,averageScore:Math.round(((current.averageScore||0)+averageScore)/2),timestamp:Date.now()};
+                return {
+                    xp:(current.xp||0)+xp,
+                    quizzesSolved:(current.quizzesSolved||0)+quizzesSolved,
+                    averageScore:Math.round(((current.averageScore||0)+averageScore)/2),
+                    timestamp:Date.now()
+                };
             });
         });
     },
 
-    openLiveSessions() { this.currentView='live-sessions'; this.hideAllViews(); document.getElementById('view-live-sessions').classList.remove('hidden'); this.renderLiveSessions(); },
-    switchSessionsTab(tab,btn) { this.sessionsTab=tab; document.querySelectorAll('#view-live-sessions .tab-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); this.renderLiveSessions(); },
-    renderLiveSessions() {
-        const sessions = Object.entries(this.dbData.liveSessions||{}).map(([id,v])=>({id,...v})).filter(s=>s.status===this.sessionsTab);
-        document.getElementById('sessions-list').innerHTML = sessions.length ? sessions.map(s=>`<div onclick="portal.viewLiveSession('${s.id}')" class="bg-white p-5 rounded-2xl shadow-md cursor-pointer"><h4 class="font-black">${s.title}</h4><p class="text-xs">${s.teacher} | ${s.duration} دقيقة</p></div>`).join('') : '<p class="col-span-2 text-center py-12 text-slate-400">لا توجد جلسات</p>';
+    // ==================== LIVE SESSIONS ====================
+    openLiveSessions() { 
+        this.currentView='live-sessions'; 
+        this.hideAllViews(); 
+        document.getElementById('view-live-sessions').classList.remove('hidden'); 
+        this.renderLiveSessions(); 
     },
+    
+    switchSessionsTab(tab,btn) { 
+        this.sessionsTab=tab; 
+        document.querySelectorAll('#view-live-sessions .tab-btn').forEach(b=>b.classList.remove('active')); 
+        btn.classList.add('active'); 
+        this.renderLiveSessions(); 
+    },
+    
+    renderLiveSessions() {
+        const sessions = Object.entries(this.dbData.liveSessions||{})
+            .map(([id,v])=>({id,...v}))
+            .filter(s=>s.status===this.sessionsTab);
+        document.getElementById('sessions-list').innerHTML = sessions.length ? sessions.map(s=>`
+            <div onclick="portal.viewLiveSession('${s.id}')" class="bg-white p-5 rounded-2xl shadow-md cursor-pointer card-hover">
+                <h4 class="font-black text-lg">${s.title}</h4>
+                <p class="text-sm text-slate-500 mt-2">👨‍🏫 ${s.teacher} | ⏱️ ${s.duration} دقيقة</p>
+                <p class="text-xs text-slate-400 mt-1">${s.scheduledTime ? new Date(s.scheduledTime).toLocaleString('ar-EG') : ''}</p>
+            </div>`).join('') : '<p class="col-span-2 text-center py-12 text-slate-400">لا توجد جلسات في هذا القسم</p>';
+    },
+    
     viewLiveSession(id) {
         const s=this.dbData.liveSessions?.[id]; if(!s) return;
         document.getElementById('session-modal').classList.remove('hidden');
-        document.getElementById('session-title').innerHTML = `🎥 ${s.title}`;
+        document.getElementById('session-modal-title').innerHTML = `🎥 ${s.title} - ${s.teacher}`;
         let html='';
-        if(s.youtubeLiveUrl) html+=`<div class="video-container rounded-2xl"><iframe src="${getYouTubeEmbedUrl(s.youtubeLiveUrl)}" allowfullscreen></iframe></div>`;
-        if(s.zoomLink) html+=`<div class="text-center"><a href="${s.zoomLink}" target="_blank" class="bg-blue-600 text-white px-10 py-4 rounded-2xl font-black">الانضمام عبر Zoom</a></div>`;
-        document.getElementById('session-body').innerHTML = html;
+        if(s.youtubeLiveUrl) html+=`<div class="video-container rounded-2xl mb-6"><iframe src="${getYouTubeEmbedUrl(s.youtubeLiveUrl)}" allowfullscreen></iframe></div>`;
+        if(s.zoomLink) html+=`<div class="text-center"><a href="${s.zoomLink}" target="_blank" class="inline-block bg-blue-600 text-white px-10 py-4 rounded-2xl font-black hover:bg-blue-700"><i class="fas fa-video ml-2"></i>الانضمام عبر Zoom</a></div>`;
+        if(!s.youtubeLiveUrl && !s.zoomLink) html='<p class="text-center py-12 text-slate-400">لا توجد روابط بث متاحة</p>';
+        document.getElementById('session-modal-body').innerHTML = html;
     },
 
-    openCommunity() { this.currentView='community'; this.hideAllViews(); document.getElementById('view-community').classList.remove('hidden'); this.renderCommunity(); },
-    switchCommunityTab(tab,btn) { this.communityTab=tab; document.querySelectorAll('#view-community .tab-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); this.renderCommunity(); },
-    showNewForumPost() { if(!this.session) return notify('سجل دخولك أولاً','error'); document.getElementById('new-post-form').classList.remove('hidden'); },
+    // ==================== COMMUNITY ====================
+    openCommunity() { 
+        this.currentView='community'; 
+        this.hideAllViews(); 
+        document.getElementById('view-community').classList.remove('hidden'); 
+        this.renderCommunity(); 
+    },
+    
+    switchCommunityTab(tab,btn) { 
+        this.communityTab=tab; 
+        document.querySelectorAll('#view-community .tab-btn').forEach(b=>b.classList.remove('active')); 
+        btn.classList.add('active'); 
+        this.renderCommunity(); 
+    },
+    
+    showNewForumPost() { 
+        if(!this.session) return notify('سجل دخولك أولاً','error'); 
+        document.getElementById('new-post-form').classList.remove('hidden'); 
+    },
+    
     submitForumPost() {
         if(!this.session) return notify('سجل دخولك','error');
         const t=document.getElementById('forum-post-title').value.trim(), c=document.getElementById('forum-post-content').value.trim();
         if(!t||!c) return notify('اكمل البيانات','error');
-        database.ref('community/forums').push({title:t,content:c,author:this.session.username,likes:0,comments:{},createdAt:Date.now()}).then(()=>{notify('تم النشر ✨');document.getElementById('new-post-form').classList.add('hidden');this.renderCommunity();});
+        database.ref('community/forums').push({
+            title:t,content:c,author:this.session.username,likes:0,comments:{},createdAt:Date.now()
+        }).then(()=>{
+            notify('تم النشر ✨');
+            document.getElementById('new-post-form').classList.add('hidden');
+            document.getElementById('forum-post-title').value='';
+            document.getElementById('forum-post-content').value='';
+            this.renderCommunity();
+        });
     },
+    
     renderCommunity() {
         const container=document.getElementById('community-content');
         if(this.communityTab==='forums'){
-            const posts=Object.entries(this.dbData.community?.forums||{}).map(([id,v])=>({id,...v})).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
-            container.innerHTML=posts.length?posts.map(p=>`<div class="bg-white p-5 rounded-2xl shadow-md mb-4"><div class="flex items-center gap-2 mb-2"><div class="w-8 h-8 bg-purple-400 rounded-full flex items-center justify-center text-white font-black">${p.author?.charAt(0)||'؟'}</div><h4 class="font-black">${p.title}</h4></div><p class="text-sm">${p.content}</p><div class="flex gap-3 mt-3 text-xs"><span class="text-slate-400"><i class="fas fa-heart"></i> ${p.likes||0}</span><span class="text-slate-400"><i class="fas fa-comment"></i> ${Object.keys(p.comments||{}).length}</span></div></div>`).join(''):'<p class="text-center py-12 text-slate-400">لا توجد منشورات</p>';
+            const posts=Object.entries(this.dbData.community?.forums||{})
+                .map(([id,v])=>({id,...v}))
+                .sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+            container.innerHTML=posts.length?posts.map(p=>`
+                <div class="bg-white p-5 rounded-2xl shadow-md mb-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <div class="w-8 h-8 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full flex items-center justify-center text-white font-black">${p.author?.charAt(0)||'؟'}</div>
+                        <div><h4 class="font-black">${p.title}</h4><p class="text-xs text-slate-400">${p.author} | ${p.createdAt?new Date(p.createdAt).toLocaleDateString('ar-EG'):''}</p></div>
+                    </div>
+                    <p class="text-sm text-slate-600 mt-2">${p.content}</p>
+                    <div class="flex gap-4 mt-3 text-xs">
+                        <button onclick="database.ref('community/forums/${p.id}/likes').transaction(l=>(l||0)+1)" class="text-slate-400 hover:text-red-500"><i class="fas fa-heart ml-1"></i> ${p.likes||0}</button>
+                        <span class="text-slate-400"><i class="fas fa-comment ml-1"></i> ${Object.keys(p.comments||{}).length}</span>
+                    </div>
+                </div>`).join(''):'<p class="text-center py-12 text-slate-400">لا توجد منشورات بعد. كن أول من يشارك!</p>';
         } else {
             const groups=Object.entries(this.dbData.community?.studyGroups||{}).map(([id,v])=>({id,...v}));
-            container.innerHTML=groups.length?groups.map(g=>`<div class="bg-white p-5 rounded-2xl shadow-md flex justify-between"><div><h4 class="font-black">${g.name}</h4><p class="text-xs">${g.members?.length||0} أعضاء</p></div><button class="bg-emerald-400 text-white px-4 py-2 rounded-xl font-black text-sm">انضمام</button></div>`).join(''):'<p class="text-center py-12 text-slate-400">لا توجد مجموعات</p>';
+            container.innerHTML=groups.length?groups.map(g=>`
+                <div class="bg-white p-5 rounded-2xl shadow-md flex justify-between items-center mb-3">
+                    <div><h4 class="font-black">${g.name}</h4><p class="text-xs text-slate-400">${g.members?.length||0} أعضاء</p></div>
+                    <button onclick="notify('تم الانضمام للمجموعة ✨')" class="bg-emerald-400 text-white px-4 py-2 rounded-xl font-black text-sm hover:bg-emerald-500">انضمام</button>
+                </div>`).join(''):'<p class="text-center py-12 text-slate-400">لا توجد مجموعات دراسة بعد</p>';
         }
     },
 
+    // ==================== STATS ====================
     openMyStats() {
-        this.currentView='stats'; this.hideAllViews(); document.getElementById('view-stats').classList.remove('hidden'); window.scrollTo({top:0});
-        if(this.session) { document.getElementById('stats-not-logged').classList.add('hidden'); document.getElementById('stats-content').classList.remove('hidden'); this.renderMyStats(); }
-        else { document.getElementById('stats-not-logged').classList.remove('hidden'); document.getElementById('stats-content').classList.add('hidden'); }
+        this.currentView='stats'; 
+        this.hideAllViews(); 
+        document.getElementById('view-stats').classList.remove('hidden'); 
+        window.scrollTo({top:0});
+        if(this.session) { 
+            document.getElementById('stats-not-logged').classList.add('hidden'); 
+            document.getElementById('stats-content').classList.remove('hidden'); 
+            this.renderMyStats(); 
+        } else { 
+            document.getElementById('stats-not-logged').classList.remove('hidden'); 
+            document.getElementById('stats-content').classList.add('hidden'); 
+        }
     },
+
     updateStudyTime(sec) {
         if(!this.session) return;
         database.ref(`studentProfiles/${this.session.username}/totalStudyTime`).transaction(t=>(t||0)+sec);
@@ -590,6 +1002,7 @@ const portal = {
             database.ref(`studentProfiles/${this.session.username}/lastActive`).set(Date.now());
         });
     },
+
     updateStudentProfile(xp, quizScore, subject) {
         if(!this.session) return;
         const name = this.session.username;
@@ -620,6 +1033,7 @@ const portal = {
         });
         this.updateLeaderboard(xp, 1, quizScore);
     },
+
     renderMyStats() {
         if(!this.session) return;
         database.ref(`studentProfiles/${this.session.username}`).once('value', snap => {
@@ -627,10 +1041,13 @@ const portal = {
             document.getElementById('stats-level').innerText = `المستوى ${d.level||1}`;
             document.getElementById('stats-xp').innerText = `${d.totalXP||0} XP`;
             document.getElementById('stats-xp-bar').style.width = `${((d.totalXP||0)%100)}%`;
+            document.getElementById('stats-xp-next').innerText = `${(d.totalXP||0)%100} / 100 XP للمستوى التالي`;
             document.getElementById('stats-total-quizzes').innerText = d.totalQuizzes||0;
             document.getElementById('stats-avg-score').innerText = `${d.averageScore||0}%`;
             document.getElementById('stats-streak').innerText = d.streak||0;
             document.getElementById('stats-hours').innerText = Math.floor((d.totalStudyTime||0)/60);
+            
+            // Badges
             const badges = d.badges||[];
             const allBadges = [
                 {id:'first_quiz',name:'أول اختبار',icon:'🎯',color:'from-blue-400 to-blue-600'},
@@ -647,33 +1064,41 @@ const portal = {
                     <h5 class="font-black text-sm">${b.name}</h5>
                     ${badges.includes(b.id)?`<span class="inline-block mt-2 bg-gradient-to-r ${b.color} text-white text-[10px] px-2 py-0.5 rounded-full font-black">مكتسبة ✓</span>`:'<span class="inline-block mt-2 bg-slate-100 text-slate-400 text-[10px] px-2 py-0.5 rounded-full">🔒</span>'}
                 </div>`).join('');
-            // إحصائيات المواد
+            
+            // Subject stats
             const subjects = d.subjects || {};
-            const subjectNames = getSubjectsForStage(this.path.stage || 'primary').reduce((acc, s) => { acc[s.id] = s.name; return acc; }, {});
+            const allSubs = getSubjectsForStage(this.path.stage || 'primary');
+            const subjectNames = {};
+            allSubs.forEach(s => { subjectNames[s.id] = s.name; });
             const container = document.getElementById('stats-subjects');
             if(Object.keys(subjects).length > 0) {
                 container.innerHTML = Object.entries(subjects).map(([sub, data]) => {
                     const avg = data.quizzes > 0 ? Math.round(data.totalScore / data.quizzes) : 0;
                     const name = subjectNames[sub] || sub;
-                    return `<div class="bg-white p-4 rounded-2xl border shadow-sm flex justify-between items-center"><span class="font-black">${name}</span><span class="text-sm">${data.quizzes} اختبار | متوسط ${avg}%</span></div>`;
+                    return `<div class="bg-white p-4 rounded-2xl border shadow-sm flex justify-between items-center"><span class="font-black">${name}</span><span class="text-sm font-bold">${data.quizzes} اختبار | متوسط ${avg}%</span></div>`;
                 }).join('');
-                // إحصائية كلية
                 const totalQuizzes = Object.values(subjects).reduce((sum, s) => sum + s.quizzes, 0);
                 const totalScores = Object.values(subjects).reduce((sum, s) => sum + s.totalScore, 0);
                 const overallAvg = totalQuizzes > 0 ? Math.round(totalScores / totalQuizzes) : 0;
                 container.innerHTML += `<div class="bg-indigo-50 p-4 rounded-2xl border border-indigo-200 flex justify-between items-center mt-4"><span class="font-black text-indigo-800">📊 الإجمالي العام</span><span class="text-sm font-bold">${totalQuizzes} اختبار | متوسط ${overallAvg}%</span></div>`;
             } else {
-                container.innerHTML = '<p class="text-slate-400 text-center">لم تحل أي اختبار بعد</p>';
+                container.innerHTML = '<p class="text-slate-400 text-center py-4">لم تحل أي اختبار بعد</p>';
             }
         });
     },
 
+    // ==================== ACCESS CONTROL ====================
     attemptAccess(type,id,isLocked) {
         if(!isLocked) { this.openContent(type,id); return; }
         if(this.session?.isActive && Date.now() < this.session.expiry) { this.openContent(type,id); }
-        else { this.pendingAction={type,id}; this.openLoginModal(); }
+        else { this.pendingAction={type,id}; this.openLoginModal(); notify('هذا المحتوى يتطلب اشتراك VIP', 'error'); }
     },
-    closeLoginModal() { document.getElementById('login-modal').classList.add('hidden'); this.pendingAction=null; },
+
+    closeLoginModal() { 
+        document.getElementById('login-modal').classList.add('hidden'); 
+        this.pendingAction=null; 
+    },
+
     processLogin() {
         const u=document.getElementById('std-user').value.trim(), p=document.getElementById('std-pass').value.trim();
         if(!u||!p) return notify('أدخل البيانات','error');
@@ -691,74 +1116,155 @@ const portal = {
             this.closeLoginModal();
             this.ensureStudentProfile();
             notify('أهلاً بك! ✨');
-            if(this.pendingAction) { setTimeout(()=>{this.openContent(this.pendingAction.type,this.pendingAction.id);this.pendingAction=null;},500); }
+            if(this.pendingAction) { 
+                setTimeout(()=>{
+                    this.openContent(this.pendingAction.type,this.pendingAction.id);
+                    this.pendingAction=null;
+                },500); 
+            }
         });
     },
-    logout() { localStorage.removeItem('studentSession'); this.session=null; document.getElementById('user-info').classList.add('hidden'); document.getElementById('guest-info').classList.remove('hidden'); notify('تم الخروج 👋'); this.goHome(); },
 
+    logout() { 
+        localStorage.removeItem('studentSession'); 
+        this.session=null; 
+        document.getElementById('user-info').classList.add('hidden'); 
+        document.getElementById('guest-info').classList.remove('hidden'); 
+        notify('تم الخروج 👋'); 
+        this.goHome(); 
+    },
+
+    // ==================== CONTENT VIEWER ====================
     openContent(type,id) {
         if(type==='lesson'){
             const l=this.dbData.lessons[id]; if(!l) return notify('الدرس غير موجود','error');
             document.getElementById('viewer-modal').classList.remove('hidden');
             document.getElementById('viewer-title').innerHTML=`📖 ${l.title}`;
             const videos = l.videos || [];
-            this.activeVideoIndex = 0; // بداية بأول فيديو
+            this.activeVideoIndex = 0;
             let body = '<div class="max-w-4xl mx-auto space-y-6">';
+            
+            // صورة الدرس في الأعلى
+            if(l.imageUrl && l.imagePosition === 'top') {
+                body += `<div class="rounded-2xl overflow-hidden shadow-lg"><img src="${l.imageUrl}" alt="${l.title}" class="w-full max-h-96 object-cover"></div>`;
+            }
+            
             // عرض الفيديو النشط
             if(videos.length > 0) {
-                body += `<div id="active-video-container" class="video-container rounded-2xl shadow-xl mb-4">
-                    <iframe src="${getYouTubeEmbedUrl(videos[0].url)}" frameborder="0" allowfullscreen></iframe>
-                </div>`;
-                // أزرار المدرسين
+                body += `<div id="active-video-container" class="video-container rounded-2xl shadow-xl mb-4"><iframe src="${getYouTubeEmbedUrl(videos[0].url)}" frameborder="0" allowfullscreen></iframe></div>`;
                 if(videos.length > 1) {
-                    body += '<div class="flex flex-wrap gap-3 justify-center mb-4"><span class="text-sm font-bold text-slate-500 self-center">اختر شرح المدرس:</span>';
+                    body += '<div class="flex flex-wrap gap-3 justify-center mb-4"><span class="text-sm font-bold text-slate-500 self-center">🎥 اختر شرح المدرس:</span>';
                     videos.forEach((v, idx) => {
-                        body += `<button onclick="portal.switchVideo(${idx}, '${getYouTubeEmbedUrl(v.url)}')" id="teacher-btn-${idx}" class="teacher-btn px-4 py-2 rounded-xl font-bold text-sm border-2 border-indigo-200 bg-white hover:bg-indigo-50 transition-all ${idx===0?'active':''}">
-                            <i class="fas fa-chalkboard-teacher ml-1"></i> ${v.name || 'مدرس '+(idx+1)}
-                        </button>`;
+                        body += `<button onclick="portal.switchVideo(${idx}, '${getYouTubeEmbedUrl(v.url)}')" id="teacher-btn-${idx}" class="teacher-btn px-4 py-2 rounded-xl font-bold text-sm border-2 border-indigo-200 bg-white hover:bg-indigo-50 transition-all ${idx===0?'active':''}"><i class="fas fa-chalkboard-teacher ml-1"></i> ${v.name || 'مدرس '+(idx+1)}</button>`;
                     });
                     body += '</div>';
                 } else {
                     body += `<div class="text-center text-sm font-bold text-slate-500 mb-2"><i class="fas fa-chalkboard-teacher ml-1"></i> شرح: ${videos[0].name || 'المعلم'}</div>`;
                 }
             }
+            
             // محتوى الشرح
-            if(l.content) body+=`<div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg"><h4 class="font-black text-lg mb-4">📝 الشرح</h4><div class="prose">${this.formatContent(l.content)}</div></div>`;
+            if(l.content) body+=`<div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg"><h4 class="font-black text-lg mb-4"><i class="fas fa-book-open ml-2"></i>الشرح</h4><div class="prose">${this.formatContent(l.content)}</div></div>`;
+            
+            // صورة الدرس في الأسفل
+            if(l.imageUrl && l.imagePosition === 'bottom') {
+                body += `<div class="rounded-2xl overflow-hidden shadow-lg"><img src="${l.imageUrl}" alt="${l.title}" class="w-full max-h-96 object-cover"></div>`;
+            }
+            
             // أسئلة التدريب
-            if(l.questions?.length) body+=`<div class="bg-emerald-50 p-8 rounded-2xl text-center"><h4 class="font-black text-2xl text-emerald-900 mb-4">🎯 تدريبات (${l.questions.length} سؤال)</h4><button onclick="portal.startQuizEngine('lesson','${id}')" class="bg-emerald-500 text-white px-10 py-4 rounded-2xl font-black">ابدأ التدريب</button></div>`;
+            if(l.questions?.length) body+=`<div class="bg-emerald-50 p-8 rounded-2xl text-center border border-emerald-200"><h4 class="font-black text-2xl text-emerald-900 mb-4">🎯 تدريبات (${l.questions.length} سؤال)</h4><p class="text-emerald-700 mb-4 font-bold">اختبر فهمك للدرس</p><button onclick="portal.startQuizEngine('lesson','${id}')" class="bg-emerald-500 text-white px-10 py-4 rounded-2xl font-black hover:bg-emerald-600 shadow-lg">ابدأ التدريب</button></div>`;
+            
             body+='</div>';
             document.getElementById('viewer-body').innerHTML = body;
-        } else if(type==='quiz') this.startQuizEngine('quiz',id);
-        else if(type==='simulation') this.startQuizEngine('simulation',id);
+            document.getElementById('viewer-modal').scrollTop = 0;
+        } else if(type==='quiz') {
+            this.startQuizEngine('quiz',id);
+        } else if(type==='simulation') {
+            this.startQuizEngine('simulation',id);
+        }
     },
+
     switchVideo(index, url) {
         this.activeVideoIndex = index;
-        document.getElementById('active-video-container').innerHTML = `<iframe src="${url}" frameborder="0" allowfullscreen></iframe>`;
-        // تحديث الأزرار
+        const container = document.getElementById('active-video-container');
+        if(container) container.innerHTML = `<iframe src="${url}" frameborder="0" allowfullscreen></iframe>`;
         document.querySelectorAll('.teacher-btn').forEach((btn, i) => {
             btn.classList.toggle('active', i === index);
         });
     },
-    closeViewer() { document.getElementById('viewer-modal').classList.add('hidden'); clearInterval(this.quizTimer); this.quizTimer=null; this.currentQuizData=null; },
 
-    startQuizEngine(source,id) {
-        let title='', questions=[];
-        if(source==='lesson'){ const l=this.dbData.lessons[id]; if(!l?.questions) return notify('لا توجد أسئلة','error'); title=l.title; questions=JSON.parse(JSON.stringify(l.questions)); }
-        else if(source==='quiz'){ const q=this.dbData.quizzes[id]; if(!q?.questions) return notify('لا توجد أسئلة','error'); title=q.name; questions=JSON.parse(JSON.stringify(q.questions)); }
-        else { /* simulation */ }
+    closeViewer() { 
+        document.getElementById('viewer-modal').classList.add('hidden'); 
+        clearInterval(this.quizTimer); 
+        this.quizTimer=null; 
+        this.currentQuizData=null; 
+    },
+
+    // ==================== QUIZ ENGINE ====================
+    startQuizEngine(source, id) {
+        let title='', questions=[], subject=this.path.subject;
+        if(source==='lesson') { 
+            const l=this.dbData.lessons[id]; 
+            if(!l?.questions?.length) return notify('لا توجد أسئلة في هذا الدرس','error'); 
+            title=l.title; 
+            questions=JSON.parse(JSON.stringify(l.questions)); 
+        } else if(source==='quiz') { 
+            const q=this.dbData.quizzes[id]; 
+            if(!q?.questions?.length) return notify('لا توجد أسئلة في هذا الاختبار','error'); 
+            title=q.name; 
+            questions=JSON.parse(JSON.stringify(q.questions)); 
+            subject = q.subject;
+        } else if(source==='simulation') {
+            const s=this.dbData.simulations[id];
+            if(!s) return notify('المحاكي غير موجود','error');
+            // جمع أسئلة من جميع المواد
+            const counts = s.counts || {ar:5, ma:5, sc:5, en:5};
+            questions = [];
+            const allLessons = Object.values(this.dbData.lessons||{})
+                .filter(l=>l.type===s.type&&l.stage===s.stage&&l.grade===s.grade&&!l.isHidden&&l.questions?.length);
+            const bySubject = {};
+            allLessons.forEach(l => { if(!bySubject[l.subject]) bySubject[l.subject]=[]; bySubject[l.subject].push(...l.questions); });
+            Object.entries(counts).forEach(([sub, count]) => {
+                const pool = bySubject[sub] || [];
+                const shuffled = pool.sort(()=>Math.random()-0.5).slice(0, parseInt(count));
+                questions.push(...shuffled);
+            });
+            title = s.name;
+            if(!questions.length) return notify('لا توجد أسئلة متاحة للمحاكي','error');
+        }
         questions = questions.sort(()=>Math.random()-0.5);
-        this.currentQuizData = {title,questions,answers:new Array(questions.length).fill(null),answered:new Array(questions.length).fill(false),isSubmitted:false,startTime:Date.now(), subject: this.path.subject };
+        this.currentQuizData = {
+            title,questions,
+            answers:new Array(questions.length).fill(null),
+            answered:new Array(questions.length).fill(false),
+            isSubmitted:false,startTime:Date.now(),
+            subject: subject
+        };
         this.currentQuestionIndex = 0;
         document.getElementById('viewer-modal').classList.remove('hidden');
         document.getElementById('viewer-title').innerHTML = `📝 ${title}`;
         document.getElementById('viewer-body').innerHTML = `
         <div class="max-w-3xl mx-auto">
-            <div class="bg-white/80 p-4 rounded-2xl mb-6"><div class="w-full bg-slate-200 rounded-full h-2.5"><div id="quiz-progress-bar" class="bg-blue-500 h-2.5 rounded-full" style="width:0%"></div></div><span id="quiz-progress-text" class="text-xs font-bold">1/${questions.length}</span></div>
-            <div id="single-question-container" class="bg-white p-6 md:p-8 rounded-3xl shadow-xl"><div class="flex items-start gap-3 mb-6"><span id="q-number-badge" class="bg-blue-500 text-white w-10 h-10 flex items-center justify-center rounded-xl font-black text-sm">1</span><h4 id="q-text-display" class="font-black text-xl"></h4></div><div id="q-opts-display" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div></div>
-            <div class="mt-6 flex justify-between"><button id="btn-prev-q" onclick="portal.prevQuestion()" class="bg-slate-200 px-5 py-3 rounded-xl font-bold hidden">السابق</button><button id="btn-next-q" onclick="portal.nextQuestion()" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-black">التالي</button><button id="btn-submit-q" onclick="portal.submitQuiz()" class="bg-emerald-500 text-white px-6 py-3 rounded-xl font-black hidden">تسليم</button></div>
+            <div class="bg-white/80 p-4 rounded-2xl mb-6">
+                <div class="w-full bg-slate-200 rounded-full h-2.5"><div id="quiz-progress-bar" class="bg-blue-500 h-2.5 rounded-full transition-all" style="width:0%"></div></div>
+                <span id="quiz-progress-text" class="text-xs font-bold mt-2 block">1/${questions.length}</span>
+            </div>
+            <div id="single-question-container" class="bg-white p-6 md:p-8 rounded-3xl shadow-xl">
+                <div class="flex items-start gap-3 mb-6">
+                    <span id="q-number-badge" class="bg-blue-500 text-white w-10 h-10 flex items-center justify-center rounded-xl font-black text-sm shrink-0">1</span>
+                    <h4 id="q-text-display" class="font-black text-xl"></h4>
+                </div>
+                <div id="q-opts-display" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+            </div>
+            <div class="mt-6 flex justify-between">
+                <button id="btn-prev-q" onclick="portal.prevQuestion()" class="bg-slate-200 px-5 py-3 rounded-xl font-bold hidden">السابق</button>
+                <button id="btn-next-q" onclick="portal.nextQuestion()" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-black hidden">التالي</button>
+                <button id="btn-submit-q" onclick="portal.submitQuiz()" class="bg-emerald-500 text-white px-6 py-3 rounded-xl font-black hidden">تسليم الإجابات</button>
+            </div>
         </div>`;
         this.renderSingleQuestion();
     },
+
     renderSingleQuestion() {
         const qd = this.currentQuizData; if(!qd) return;
         const idx = this.currentQuestionIndex, q = qd.questions[idx], total = qd.questions.length;
@@ -790,6 +1296,7 @@ const portal = {
             </div>`;
         }).join('');
     },
+
     selectOption(qIdx, oIdx) {
         const qd = this.currentQuizData; if(!qd || qd.answered[qIdx] || qd.isSubmitted) return;
         qd.answers[qIdx] = oIdx;
@@ -802,8 +1309,22 @@ const portal = {
             document.getElementById('btn-submit-q').classList.remove('hidden');
         }
     },
-    nextQuestion() { if(!this.currentQuizData) return; if(this.currentQuestionIndex < this.currentQuizData.questions.length-1) { this.currentQuestionIndex++; this.renderSingleQuestion(); } },
-    prevQuestion() { if(this.currentQuestionIndex > 0) { this.currentQuestionIndex--; this.renderSingleQuestion(); } },
+
+    nextQuestion() { 
+        if(!this.currentQuizData) return; 
+        if(this.currentQuestionIndex < this.currentQuizData.questions.length-1) { 
+            this.currentQuestionIndex++; 
+            this.renderSingleQuestion(); 
+        } 
+    },
+
+    prevQuestion() { 
+        if(this.currentQuestionIndex > 0) { 
+            this.currentQuestionIndex--; 
+            this.renderSingleQuestion(); 
+        } 
+    },
+
     submitQuiz() {
         clearInterval(this.quizTimer);
         const qd = this.currentQuizData; if(!qd) return;
@@ -830,10 +1351,10 @@ const portal = {
         });
         const perc = total>0 ? Math.round((score/total)*100) : 0;
         let msg, emoji, gradient;
-        if(perc>=90){msg='أداء مذهل!';emoji='🏆';gradient='from-yellow-400 to-amber-600';}
-        else if(perc>=75){msg='ممتاز!';emoji='🌟';gradient='from-emerald-400 to-teal-600';}
-        else if(perc>=50){msg='جيد';emoji='👍';gradient='from-blue-400 to-indigo-600';}
-        else {msg='راجع وحاول مجدداً';emoji='💪';gradient='from-red-400 to-rose-600';}
+        if(perc>=90){msg='أداء مذهل! استمر في التألق';emoji='🏆';gradient='from-yellow-400 to-amber-600';}
+        else if(perc>=75){msg='ممتاز! أنت على الطريق الصحيح';emoji='🌟';gradient='from-emerald-400 to-teal-600';}
+        else if(perc>=50){msg='جيد، واصل المذاكرة';emoji='👍';gradient='from-blue-400 to-indigo-600';}
+        else {msg='راجع الدرس وحاول مجدداً';emoji='💪';gradient='from-red-400 to-rose-600';}
         document.getElementById('viewer-body').innerHTML = `
         <div class="max-w-3xl mx-auto" style="animation: scaleIn 0.5s ease-out;">
             <div class="bg-gradient-to-br ${gradient} text-white p-8 md:p-10 rounded-3xl text-center mb-8 shadow-2xl">
@@ -846,7 +1367,7 @@ const portal = {
             </div>
             <h3 class="text-xl font-black text-slate-800 mb-6">📋 مراجعة الإجابات</h3>
             <div class="space-y-3 max-h-[60vh] overflow-y-auto pr-2">${reviewHtml}</div>
-            <div class="text-center mt-8 pb-8"><button onclick="portal.closeViewer()" class="bg-slate-700 text-white px-10 py-4 rounded-2xl font-black">إغلاق</button></div>
+            <div class="text-center mt-8 pb-8"><button onclick="portal.closeViewer()" class="bg-slate-700 text-white px-10 py-4 rounded-2xl font-black hover:bg-slate-800">إغلاق</button></div>
         </div>`;
         document.getElementById('viewer-body').scrollTop = 0;
         document.getElementById('viewer-modal').scrollTop = 0;
@@ -854,23 +1375,30 @@ const portal = {
             const xpEarned = Math.round(perc * 0.5);
             this.updateStudentProfile(xpEarned, perc, qd.subject);
             this.updateLeaderboard(xpEarned, 1, perc);
-            // حفظ نتيجة الاختبار
             database.ref(`studentAnswers/${this.session.username}`).push({
-                subject: qd.subject,
-                score: perc,
-                total: total,
-                date: Date.now()
+                subject: qd.subject, score: perc, total: total, date: Date.now()
             });
         }
     }
 };
 
+// ==================== EVENT LISTENERS ====================
 document.addEventListener('DOMContentLoaded', ()=> portal.init());
-document.getElementById('login-modal')?.addEventListener('click',function(e){if(e.target===this)portal.closeLoginModal();});
-document.getElementById('viewer-modal')?.addEventListener('click',function(e){if(e.target===this)portal.closeViewer();});
-document.getElementById('session-modal')?.addEventListener('click',function(e){if(e.target===this)this.classList.add('hidden');});
-document.addEventListener('keydown',function(e){
-    if(e.key==='Escape') {
+
+document.getElementById('login-modal')?.addEventListener('click', function(e) {
+    if(e.target === this) portal.closeLoginModal();
+});
+
+document.getElementById('viewer-modal')?.addEventListener('click', function(e) {
+    if(e.target === this) portal.closeViewer();
+});
+
+document.getElementById('session-modal')?.addEventListener('click', function(e) {
+    if(e.target === this) this.classList.add('hidden');
+});
+
+document.addEventListener('keydown', function(e) {
+    if(e.key === 'Escape') {
         if(!document.getElementById('login-modal').classList.contains('hidden')) portal.closeLoginModal();
         else if(!document.getElementById('viewer-modal').classList.contains('hidden')) portal.closeViewer();
         else document.getElementById('session-modal').classList.add('hidden');
