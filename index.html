@@ -632,8 +632,6 @@
             // الاستماع للتغييرات في قاعدة البيانات
             database.ref('/').on('value', snap => {
                 this.dbData = snap.val() || {};
-                // إصلاح هيكل customSubjects محلياً
-                this.fixCustomSubjectsStructure();
                 this.applySettings();
                 this.refreshCurrentView();
             });
@@ -657,35 +655,6 @@
             document.getElementById('subscribe-btn')?.addEventListener('click', () => {
                 const wa = ((this.dbData.settings?.socialLinks?.whatsapp || this.dbData.settings?.whatsapp) || '201234567890').replace(/[^0-9]/g, '');
                 window.open(`https://wa.me/${wa}`, '_blank');
-            });
-        },
-
-        // ==================== إصلاح هيكل customSubjects ====================
-        fixCustomSubjectsStructure() {
-            if (!this.dbData.customSubjects) {
-                this.dbData.customSubjects = { primary: {}, prep: {}, sec: {} };
-                return;
-            }
-            if (typeof this.dbData.customSubjects !== 'object' || Array.isArray(this.dbData.customSubjects)) {
-                this.dbData.customSubjects = { primary: {}, prep: {}, sec: {} };
-                return;
-            }
-            ['primary', 'prep', 'sec'].forEach(stage => {
-                if (!this.dbData.customSubjects[stage]) {
-                    this.dbData.customSubjects[stage] = {};
-                } else if (Array.isArray(this.dbData.customSubjects[stage])) {
-                    const gradeObj = {};
-                    this.dbData.customSubjects[stage].forEach((item, idx) => {
-                        gradeObj[idx + 1] = [item];
-                    });
-                    this.dbData.customSubjects[stage] = gradeObj;
-                } else if (typeof this.dbData.customSubjects[stage] === 'object') {
-                    Object.keys(this.dbData.customSubjects[stage]).forEach(grade => {
-                        if (!Array.isArray(this.dbData.customSubjects[stage][grade])) {
-                            this.dbData.customSubjects[stage][grade] = [];
-                        }
-                    });
-                }
             });
         },
 
@@ -1098,7 +1067,7 @@
             document.getElementById(`btn-g-${grade}`)?.classList.add('border-blue-400', 'shadow-xl');
 
             // عرض المواد (افتراضية + مخصصة) مع فلترة حسب النوع
-            const subs = this.getSubjectsForGrade(this.path.stage, grade);
+            const subs = this.getSubjectsForGrade(this.path.stage, grade, this.path.type);
             document.getElementById('subjects-grid').innerHTML = subs.map((s, i) => `
                 <div onclick="portal.selectSubject('${s.id}','${s.name}')" class="card-hover bg-white rounded-3xl p-6 text-center shadow-lg cursor-pointer" style="animation: fadeInUp 0.4s ${i*0.08}s both;">
                     <div class="text-5xl mb-3">${s.emoji||'📚'}</div>
@@ -1110,21 +1079,23 @@
             document.getElementById('view-content').classList.add('hidden');
         },
 
-        // ==================== دالة جلب المواد (افتراضية + مخصصة) مع فلترة النوع ====================
-        getSubjectsForGrade(stage, grade) {
+        // ==================== دالة جلب المواد (افتراضية + مخصصة) مع فلترة النوع (محسّنة) ====================
+        getSubjectsForGrade(stage, grade, type = null) {
             const defaults = defaultSubjects[stage] || [];
-            // جلب المواد المخصصة مع فلترة حسب النوع
             let custom = [];
+            // إذا لم يتم تحديد نوع، نأخذ النوع من المسار الحالي
+            const filterType = type || this.path.type;
+            
             if (this.dbData.customSubjects && this.dbData.customSubjects[stage] && this.dbData.customSubjects[stage][grade]) {
                 const customData = this.dbData.customSubjects[stage][grade];
                 if (Array.isArray(customData)) {
-                    // ✅ فلترة المواد المخصصة حسب نوع التعليم الحالي
                     custom = customData.filter(c => {
                         if (!c || !c.id || !c.name) return false;
                         // إذا لم تحدد المادة نوعاً، تظهر للكل
                         if (!c.type) return true;
-                        // وإلا تظهر فقط لنوعها المحدد
-                        return c.type === this.path.type;
+                        // إذا كان filterType موجوداً، نفلتر حسبه، وإلا نعرض الكل
+                        if (filterType) return c.type === filterType;
+                        return true; // عرض جميع المواد المخصصة إذا لم يتم تحديد نوع
                     });
                 }
             }
@@ -1140,8 +1111,15 @@
                     });
                 }
             });
-            // فلترة حسب الرؤية
-            return merged.filter(s => this.isVisible(`subject_${this.path.type}_${stage}_${grade}_${s.id}`));
+            // فلترة حسب الرؤية إذا كان النوع معروفاً
+            if (filterType) {
+                return merged.filter(s => this.isVisible(`subject_${filterType}_${stage}_${grade}_${s.id}`));
+            }
+            // بدون فلترة نوع، نعرض الكل مع التحقق من الرؤية لكلا النوعين (تقريب)
+            return merged.filter(s => {
+                // نعرض المادة إذا كانت ظاهرة في أي من النوعين
+                return this.isVisible(`subject_public_${stage}_${grade}_${s.id}`) || this.isVisible(`subject_azhar_${stage}_${grade}_${s.id}`);
+            });
         },
 
         selectSubject(subId, subName) {
@@ -1506,7 +1484,8 @@
                     allStages.forEach(stage => {
                         const grades = stage === 'primary' ? [4, 5, 6] : [1, 2, 3];
                         grades.forEach(grade => {
-                            const subs = this.getSubjectsForGrade(stage, grade);
+                            // نجلب المواد بدون فلترة نوع لعرض جميع الأسماء
+                            const subs = this.getSubjectsForGrade(stage, grade, null);
                             subs.forEach(s => { subjectNames[s.id] = s.name; });
                         });
                     });
